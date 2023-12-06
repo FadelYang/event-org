@@ -1,10 +1,10 @@
 <div class="event-card bg-gray-200 max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
-    <a href="#detailEventUrl">
+    <a href="detailEventUrl">
         <img src="{{ fake()->imageUrl($width = 328, $height = 220) }}" alt="" class="w-full rounded-t-xl">
     </a>
     <div class="event-card-detail mx-2">
         <div class="flex mt-1 between">
-            <p class="text-xl font-bold me-auto">Nama Event</p>
+            <a class="text-xl font-bold me-auto" href="detailEventUrl">Nama Event</a>
             <p class="text-lg font-bold">Online</p>
         </div>
         <div class="mt-1">

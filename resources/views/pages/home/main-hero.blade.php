@@ -6,7 +6,7 @@
          <div class="block md:flex gap-3 mt-5 items-start justify-center lg:justify-start">
              <a class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200">Buat Event</a>
              <a href="#eventPilihan"
-                 class="mt-3 md:mt-0 py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Telusuri
+                 class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Telusuri
                  Event</a>
          </div>
      </div>
