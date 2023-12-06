@@ -20,16 +20,16 @@
     <script>
         console.log("hello js");
 
-        const buttonRight = document.getElementById('buttonRightEventPilihan')
-        const buttonLeft = document.getElementById('buttonLeftEventPilihan')
+        const buttonRightEventPilihan = document.getElementById('buttonRightEventPilihan')
+        const buttonLeftEventPilihan = document.getElementById('buttonLeftEventPilihan')
 
-        buttonRight.onclick = () => {
+        buttonRightEventPilihan.onclick = () => {
             console.log('you clicked right button');
 
             document.getElementById('eventPilihanContainer').scrollLeft += 200
         }
 
-        buttonLeft.onclick = () => {
+        buttonLeftEventPilihan.onclick = () => {
             console.log('you clicked left button');
 
             document.getElementById('eventPilihanContainer').scrollLeft -= 200

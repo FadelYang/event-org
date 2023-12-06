@@ -3,5 +3,7 @@
         @include('pages.home.main-hero')
         @include('pages.home.event-pilihan')
         @include('pages.home.second-hero')
+        @include('pages.home.event-seminar')
+        @include('pages.home.event-pelatihan')
     </div>
 </x-app-layout>
