@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enum\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -29,7 +30,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::user()->role == UserRoleEnum::ADMIN) {
+            return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
+        }
+
+        return redirect()->intended(RouteServiceProvider::HOME_USER);
     }
 
     /**
