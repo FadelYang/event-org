@@ -20,6 +20,10 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .hero-banner {
     background-color: #888888;
 }
