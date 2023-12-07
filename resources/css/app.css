@@ -29,7 +29,7 @@ html {
 }
 
 .image-card-placeholder {
-    @apply min-w-[328px] min-h-[220px] bg-gray-300
+    @apply min-w-[324px] min-h-[405px] bg-gray-300
 }
 
 .hero-banner {
