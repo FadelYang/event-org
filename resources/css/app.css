@@ -24,6 +24,14 @@ html {
     scroll-behavior: smooth;
 }
 
+.opacity-hovering {
+    @apply opacity-80 hover:opacity-100;
+}
+
+.image-card-placeholder {
+    @apply min-w-[328px] min-h-[220px] bg-gray-300
+}
+
 .hero-banner {
     background-color: #888888;
 }

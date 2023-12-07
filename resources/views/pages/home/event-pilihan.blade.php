@@ -9,7 +9,7 @@
 
     <div class="">
         <div id="eventPilihanContainer" class="event-pilihan-wrap flex flex-nowrap gap-3 overflow-x-scroll snap-x snap-mandatory no-scrollbar scroll-smooth">
-            @for ($i = 0; $i < 10; $i++)
+            @for ($i = 0; $i < 3; $i++)
                 @include('components.event-card')
             @endfor
         </div>

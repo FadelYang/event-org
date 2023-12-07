@@ -11,6 +11,6 @@
          </div>
      </div>
      <div class="my-10 hidden lg:block">
-         <img src="{{ fake()->imageUrl($width = 400, $height = 400) }}" alt="" class="rounded-lg">
+         <img src="{{ fake()->imageUrl($width = 400, $height = 400) }}" alt="" class="rounded-lg min-w-[400px] min-h-[400px] bg-gray-300">
      </div>
  </div>

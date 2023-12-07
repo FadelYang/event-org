@@ -1,6 +1,6 @@
 <div class="event-card bg-gray-200 max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
     <a href="detailEventUrl">
-        <img src="{{ fake()->imageUrl($width = 328, $height = 220) }}" alt="" class="w-full rounded-t-xl">
+        <img src="{{ fake()->imageUrl($width = 328, $height = 220) }}" alt="" class="w-full rounded-t-xl max-w-[328px] max-h-[220px] opacity-hovering image-card-placeholder">
     </a>
     <div class="event-card-detail mx-2">
         <div class="flex mt-1 between">
