@@ -1,9 +1,15 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         @include('pages.home.main-hero')
-        @include('pages.home.event-pilihan')
+        @if (count($pilihanEvents) > 0)
+            @include('pages.home.event-pilihan')
+        @endif
         @include('pages.home.second-hero')
-        @include('pages.home.event-seminar')
-        @include('pages.home.event-pelatihan')
+        @if (count($seminarEvents) > 0)
+            @include('pages.home.event-seminar')
+        @endif
+        @if ($pelatihanEvents)
+            @include('pages.home.event-pelatihan')
+        @endif
     </div>
 </x-app-layout>
