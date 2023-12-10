@@ -14,6 +14,13 @@ class EventRepository
         return $event;
     }
 
+    public function getAllPilihanEvent()
+    {
+        $events = Event::where('is_premium', true)->get();
+
+        return $events;
+    }
+
     public function getAllPelatihanEvent()
     {
         $events = Event::where('type', EventTypeEnum::PELATIHAN->value)->get();

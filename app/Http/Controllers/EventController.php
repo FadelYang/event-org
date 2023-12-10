@@ -17,6 +17,8 @@ class EventController
     {
         $event = $this->eventService->getEventById(1);
 
-        return view('pages.event.detail')->with('event', $event);
+        return view('pages.event.detail', [
+            'event' => $event
+        ]);
     }
 }

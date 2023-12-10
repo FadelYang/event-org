@@ -13,10 +13,32 @@ class EventService
         $this->eventRepository = $eventRepository;
     }
 
+    
     public function getEventById($eventId)
     {
         $event = $this->eventRepository->getEventById($eventId);
-
+        
         return $event;
+    }
+
+    public function getAllPilihanEvent()
+    {
+        $events = $this->eventRepository->getAllPilihanEvent();
+
+        return $events; 
+    }
+
+    public function getAllPelatihanEvent()
+    {
+        $events = $this->eventRepository->getAllPelatihanEvent();
+
+        return $events;
+    }
+
+    public function getAllSeminarEvent()
+    {
+        $events = $this->eventRepository->getAllSeminarEvent();
+
+        return $events;
     }
 }
