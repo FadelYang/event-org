@@ -34,6 +34,6 @@ class Event extends Model
 
     public function eventCreator(): HasOne
     {
-        return $this->hasOne(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }
