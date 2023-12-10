@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(EventController::class)->group(function () {
-    Route::get('/events/{id}', 'getEventDetailPage');
+    Route::get('/events/{id}', 'getEventDetailPage')->name('event.detail');
     Route::post('/events', 'store');
 });
 
