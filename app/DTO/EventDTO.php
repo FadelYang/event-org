@@ -6,6 +6,7 @@ use DateTime;
 
 class EventDTO
 {
+    public int $id;
     public string $title;
     public int $user_id;
     public string $slug;
@@ -22,6 +23,7 @@ class EventDTO
     public DateTime $end_time;
 
     public function __construct(
+        int $id,
         string $title,
         int $user_id,
         string $slug,
@@ -38,6 +40,7 @@ class EventDTO
         DateTime $end_time,
     )
     {
+        $this->$id = $id;
         $this->title = $title;
         $this->user_id = $user_id;
         $this->slug = $slug;
