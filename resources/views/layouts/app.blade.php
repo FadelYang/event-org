@@ -31,6 +31,11 @@
             <main>
                 {{ $slot }}
             </main>
+
+            @include('components.footer')
         </div>
+
+        {{-- javascript --}}
+        @stack('javascript')
     </body>
 </html>
