@@ -34,4 +34,8 @@ class User extends Authenticatable
     protected $attributes = [
         'role' => UserRoleEnum::REGULAR
     ];
+
+    public function isAdmin() {
+        return $this->role->value == "admin";
+    }
 }
