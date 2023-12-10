@@ -35,3 +35,11 @@ html {
 .hero-banner {
     background-color: #888888;
 }
+
+/* make footer sticky in botton */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
