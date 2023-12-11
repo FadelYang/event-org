@@ -8,7 +8,7 @@
         @if (count($seminarEvents) > 0)
             @include('pages.home.event-seminar')
         @endif
-        @if ($pelatihanEvents)
+        @if (count($pelatihanEvents) > 0)
             @include('pages.home.event-pelatihan')
         @endif
     </div>
