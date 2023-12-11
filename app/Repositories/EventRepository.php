@@ -21,6 +21,21 @@ class EventRepository
         return $event;
     }
 
+    public function getEventByTypeAndSlug($eventType, $eventSlug)
+    {
+        $events = Event::where('type', $eventType)->get();
+        $event = null;
+
+        foreach ($events as $event) {
+            if($event->slug == $eventSlug)
+            {
+                $event = $event;
+            };
+        }
+
+        return $event;
+    }
+
     public function getAllPilihanEvent()
     {
         $events = Event::where('is_premium', true)->get();
