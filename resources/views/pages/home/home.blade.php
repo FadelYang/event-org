@@ -12,4 +12,5 @@
             @include('pages.home.event-pelatihan')
         @endif
     </div>
+    @include('components.footer')
 </x-app-layout>
