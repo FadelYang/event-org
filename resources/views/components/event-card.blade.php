@@ -9,7 +9,7 @@
             <p class="text-lg font-bold">Online</p>
         </div>
         <div class="mt-1">
-            <p class="text-lg text-gray-500">{{  date('d M y', strtotime($item->start_date)); }}</p>
+            <p class="text-lg text-gray-500">{{  date('D, d M y', strtotime($item->start_date)); }}</p>
             <p class="mt-3 font-bold text-lg">
                 {{ $item->ticket_price == null ? 'Gratis' : 'Rp. '.number_format($item->ticket_price, 2, ',', '.') }}</p>
         </div>
