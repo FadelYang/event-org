@@ -17,6 +17,6 @@ Breadcrumbs::for('event', function (BreadcrumbTrail $trail) {
 // home > event > event_type > event_name
 Breadcrumbs::for('detailEvent', function (BreadcrumbTrail $trail, $event) {
    $trail->parent('event');
-   $trail->push($event[0], route('event.detail', [$event[0], $event[1]])); 
+   $trail->push($event[0], route('event.get.by-type', [$event[0]])); 
    $trail->push($event[1], route('event.detail', [$event[0], $event[1]])); 
 });

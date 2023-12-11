@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(EventController::class)->group(function () {
-    Route::get('/events', 'getAllEvent')->name('event.get');
+    Route::get('/events', 'getAllEventPage')->name('event.get');
+    Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
     Route::post('/events', 'store');
 });
