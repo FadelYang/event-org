@@ -38,10 +38,10 @@ class EventRepository
         $events = Event::where('type', $eventType)->get();
         $event = null;
 
-        foreach ($events as $event) {
-            if($event->slug == $eventSlug)
+        foreach ($events as $item) {
+            if($item->slug == $eventSlug)
             {
-                $event = $event;
+                $event = $item;
             };
         }
 
