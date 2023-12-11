@@ -1,5 +1,5 @@
 <div class="event-card bg-gray-200 max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
-    <a href="{{ route('event.detail', $item->id) }}">
+    <a href="{{ route('event.detail', $item->slug) }}">
         <img src="" alt=""
             class="w-full rounded-t-xl max-w-[324px] max-h-[405px] opacity-hovering image-card-placeholder">
     </a>

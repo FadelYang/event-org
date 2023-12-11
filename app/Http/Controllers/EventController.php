@@ -13,9 +13,9 @@ class EventController
         $this->eventService = $eventService;
     }
 
-    public function getEventDetailPage($id)
+    public function getEventDetailPage($eventSlug)
     {
-        $event = $this->eventService->getEventById($id);
+        $event = $this->eventService->getEventBySlug($eventSlug);
 
         return view('pages.event.detail', [
             'event' => $event

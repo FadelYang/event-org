@@ -41,10 +41,3 @@ html {
 }
 
 /* make footer sticky in botton */
-main {
-  min-height: 100vh;
-}
-
-footer {
-  margin-top: auto;
-}

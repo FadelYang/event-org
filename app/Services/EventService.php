@@ -21,6 +21,13 @@ class EventService
         return $event;
     }
 
+    public function getEventBySlug($eventSlug)
+    {
+        $event = $this->eventRepository->getEventBySlug($eventSlug);
+        
+        return $event;
+    }
+
     public function getAllPilihanEvent()
     {
         $events = $this->eventRepository->getAllPilihanEvent();
