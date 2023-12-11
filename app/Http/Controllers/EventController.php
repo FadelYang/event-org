@@ -13,12 +13,30 @@ class EventController
         $this->eventService = $eventService;
     }
 
+    public function getAllEventPage()
+    {
+        $events = $this->eventService->getAllEvent();
+
+        return view('pages.event.index', [
+            'events' => $events
+        ]);
+    }
+
     public function getEventDetailPage($eventType, $eventSlug)
     {
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
 
         return view('pages.event.detail', [
             'event' => $event
+        ]);
+    }
+
+    public function getEventsByTypePage($eventType)
+    {
+        $events = $this->eventService->getEventByType($eventType);
+
+        return view('pages.event.type', [
+            'events' => $events
         ]);
     }
 }

@@ -7,11 +7,23 @@ use App\Models\Event;
 
 class EventRepository
 {
+    public function getAllEvent()
+    {
+        return Event::all();
+    }
+
     public function getEventById($eventId)
     {
         $event = Event::find($eventId);
 
         return $event;
+    }
+
+    public function getEventByType($eventType)
+    {
+        $events = Event::where('type', $eventType)->get();
+
+        return $events;
     }
 
     public function getEventBySlug($eventSlug)

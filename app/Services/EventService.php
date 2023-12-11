@@ -13,7 +13,11 @@ class EventService
         $this->eventRepository = $eventRepository;
     }
 
-    
+    public function getAllEvent()
+    {
+        return $this->eventRepository->getAllEvent();
+    }
+
     public function getEventById($eventId)
     {
         $event = $this->eventRepository->getEventById($eventId);
@@ -26,6 +30,13 @@ class EventService
         $event = $this->eventRepository->getEventBySlug($eventSlug);
         
         return $event;
+    }
+
+    public function getEventByType($eventType)
+    {
+        $events = $this->eventRepository->getEventByType($eventType);
+        
+        return $events;
     }
 
     public function getEventByTypeAndSlug($eventType, $eventSlug)
