@@ -1,34 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-4xl text-white leading-tight">
-            {{ $event->title }}
-        </h2>
-        <div class="text-gray-300 block lg:flex lg:gap-3">
-            <p>
-                {{ date('D, d M y', strtotime($event->start_date)) }}
-            </p>
-            <p class="hidden lg:block"> - </p>
-            <p>
-                {{ $event->location }}
-            </p>
-        </div>
-        <div class="text-white mt-10">
-            <ol class="flex gap-1">
-                @foreach (Breadcrumbs::generate('detailEvent', [$event->type, $event->slug]) as $breadcrumb)
-                    @if (!is_null($breadcrumb->url) && !$loop->last)
-                        <li class="opacity-50 hover:opacity-100"><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
-                        <li>/</li>
-                    @else
-                        <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>
-                    @endif
-                @endforeach
-            </ol>
-        </div>
-    </x-slot>
+    @include('pages.event.event-detail-header')
 
-    <div>
-        {{ $event->id }}
-        {{ $event->title }}
-        {{ $event->description }}
+    <div class="block xl:flex gap-3 mt-5 max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <img src="{{ fake()->imageUrl($width=811, $height=374) }}" alt=""
+            class="w-full bg-black max-h-[374px] max-w-[811px] rounded-lg">
+        <div class="bg-gray-200 px-10 py-5 w-full max-h-[374px] max-w-[811px] rounded-lg mt-3 xl:mt-0">
+            <p>{{ $event->title }}</p>
+            <div class="flex gap-3">
+                <p>{{ date('D, d M y', strtotime($event->start_date)) }}</p>
+                <p>-</p>
+                <p>{{ date('D, d M y', strtotime($event->end_date)) }}</p>
+            </div>
+            <p>{{ $event->location }}</p>
+
+        </div>
     </div>
 </x-app-layout>
