@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('potrait_banner')->nullable();
             $table->string('landscape_banner')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
+            $table->integer('total_day');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->timestamps();

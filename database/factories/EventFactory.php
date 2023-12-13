@@ -29,13 +29,13 @@ class EventFactory extends Factory
             'type' => fake()->randomElement(EventTypeEnum::toArray()),
             'location' => fake()->city(),
             'is_premium' => fake()->boolean(),
-            'ticket_price' => fake()->numberBetween(0, 25000),
+            'ticket_price' => 25000,
             'potrait_banner' => null,
             'landscape_banner' => null,
             'start_date' => fake()->date(),
-            'end_date' => fake()->date(),
-            'start_time' => fake()->time(),
-            'end_time' => fake()->time(),
+            'total_day' => 3,
+            'start_time' => null,
+            'end_time' => null,
         ];
     }
 }

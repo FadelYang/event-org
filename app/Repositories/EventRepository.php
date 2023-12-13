@@ -39,10 +39,9 @@ class EventRepository
         $event = null;
 
         foreach ($events as $item) {
-            if($item->slug == $eventSlug)
-            {
+            if ($item->slug == $eventSlug) {
                 $event = $item;
-            };
+            }
         }
 
         return $event;
