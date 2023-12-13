@@ -26,7 +26,7 @@ class EventController
     {
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
 
-        return view('pages.event.detail', [
+        return view('pages.event.detail.index', [
             'event' => $event
         ]);
     }
