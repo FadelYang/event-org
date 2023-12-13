@@ -13,7 +13,7 @@
             </svg>
             <p>{{ date('D, d M y', strtotime($event->start_date)) }}</p>
             <p>-</p>
-            <p>{{ date('D, d M y', strtotime($event->end_date)) }}</p>
+            <p>{{ date('D, d M y', strtotime($event->start_date . ' + ' . $event->total_day . ' days')) }}</p>
         </div>
         <div class="flex gap-3 mb-auto">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
