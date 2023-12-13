@@ -1,5 +1,5 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-4xl leading-tight">
+    <h2 class="font-semibold text-lg lg:text-4xl leading-tight">
         {{ $event->title }}
     </h2>
     <div class="opacity-80 block lg:flex lg:gap-3">
@@ -24,14 +24,14 @@
         </div>
     </div>
     <div class="mt-10">
-        <ol class="flex gap-2">
+        <ol class="flex flex-wrap gap-2 text-md lg:text-lg">
             @foreach (Breadcrumbs::generate('detailEvent', [$event->type, $event->slug]) as $breadcrumb)
                 @if (!is_null($breadcrumb->url) && !$loop->last)
                     <li class="opacity-70 hover:opacity-100"><a
                             href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
                     <li>></li>
                 @else
-                    <li class="breadcrumb-item active font-bold">{{ $breadcrumb->title }}</li>
+                    <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>
                 @endif
             @endforeach
         </ol>
