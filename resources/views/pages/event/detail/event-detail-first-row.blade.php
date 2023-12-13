@@ -2,7 +2,7 @@
     <img src="{{ fake()->imageUrl($width = 811, $height = 374) }}" alt=""
         class="w-full bg-black max-h-[374px] max-w-[811px] rounded-lg">
     <div
-        class="bg-gray-200 px-10 py-5 w-full max-h-[374px] max-w-[811px] rounded-lg mt-3 xl:mt-0 flex flex-col gap-3">
+        class="bg-gray-200 px-2 sm:px-4 py-5 w-full max-h-[374px] max-w-[811px] rounded-lg mt-3 xl:mt-0 flex flex-col gap-3">
         <p class="text-2xl lg:text-4xl font-bold mb-2 lg:mb-5">{{ $event->title }}</p>
         <div class="flex gap-3">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"

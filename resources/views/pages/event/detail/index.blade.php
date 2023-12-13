@@ -1,7 +1,7 @@
 <x-app-layout>
     @include('pages.event.detail.event-detail-header')
 
-    <div class="mt-3 max-w-7xl mx-2 sm:px-6 lg:px-8 xl:mx-auto h-auto">
+    <div class="mt-3 max-w-7xl mx-1 lg:px-8 xl:mx-auto h-auto">
         @include('pages.event.detail.event-detail-first-row')
         @include('pages.event.detail.event-detail-second-row')
     </div>
