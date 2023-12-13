@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(EventController::class)->group(function () {
+    Route::get('/events', 'getAllEventPage')->name('event.get');
+    Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
+    Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
+    Route::post('/events', 'store');
 });
 
 require __DIR__.'/auth.php';
