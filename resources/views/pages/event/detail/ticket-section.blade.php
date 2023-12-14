@@ -2,7 +2,7 @@
     <p class="text-2xl md:text-4xl font-bold mb-5">Ticket</p>
     <div class="tickets">
         @if (count($eventTickets) > 0)
-            @for ($i = 0; $i < $event->total_day; $i++)
+            @for ($i = 0; $i <= $event->total_day; $i++)
                 <div>
                     <p class="ext-md lg:text-lg">Ticket day:
                         {{ date('D, d M y', strtotime($event->start_date . ' + ' . $i . ' days')) }}</p>
