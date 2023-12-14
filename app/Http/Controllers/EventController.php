@@ -22,6 +22,13 @@ class EventController
         ]);
     }
 
+    public function getEventDetail($eventType, $eventSlug)
+    {
+        $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+
+        return $event;
+    }
+
     public function getEventDetailPage($eventType, $eventSlug)
     {
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
