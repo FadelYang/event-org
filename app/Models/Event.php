@@ -19,7 +19,6 @@ class Event extends Model
         'description',
         'location',
         'is_premium',
-        'ticket_price',
         'potrait_banner',
         'landscape_banner',
         'start_date',
@@ -29,7 +28,6 @@ class Event extends Model
     ];
 
     protected $attributes = [
-        'ticket_price' => 0,
         'is_premium' => false
     ];
 

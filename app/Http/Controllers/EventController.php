@@ -10,7 +10,8 @@ class EventController
     protected $eventService;
     protected $ticketService;
 
-    public function __construct(EventService $eventService, TicketService $ticketService) {
+    public function __construct(EventService $eventService, TicketService $ticketService)
+    {
         $this->eventService = $eventService;
         $this->ticketService = $ticketService;
     }
@@ -34,10 +35,11 @@ class EventController
     public function getEventDetailPage($eventType, $eventSlug)
     {
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+        $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
-        return view('pages.event.detail.index', [
-            'event' => $event
-        ]);
+        return view('pages.event.detail.index', compact(
+            ['event', 'eventTickets']
+        ));
     }
 
     public function getEventsByTypePage($eventType)

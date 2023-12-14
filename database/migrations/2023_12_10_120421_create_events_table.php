@@ -23,7 +23,6 @@ return new class extends Migration
             $table->longText('description');
             $table->string('location');
             $table->boolean('is_premium');
-            $table->integer('ticket_price')->nullable();
             $table->string('potrait_banner')->nullable();
             $table->string('landscape_banner')->nullable();
             $table->date('start_date');

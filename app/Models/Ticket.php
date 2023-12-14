@@ -13,15 +13,11 @@ class Ticket extends Model
     protected $fillable = [
         'name',
         'type',
+        'ticket_price',
         'event_id',
     ];
 
     protected $attributes = [
         'type' => 'regular'
     ];
-
-    public function event(): HasOne
-    {
-        return $this->hasOne(Event::class, 'event_id', 'id');
-    }
 }
