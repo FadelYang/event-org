@@ -2,17 +2,20 @@
 
 namespace App\Services;
 
+use App\Repositories\TicketRepository;
+
 class TicketService
 {
-    protected $ticketService;
+    protected $ticketRepository;
 
-    public function __construct(TicketService $ticketService) {
-        $this->ticketService = $ticketService;
+    public function __construct(TicketRepository $ticketRepository)
+    {
+        $this->ticketRepository = $ticketRepository;
     }
 
     public function getTicketByEvent($eventId)
     {
-        $eventTicket = $this->getTicketByEvent($eventId);
+        $eventTicket = $this->ticketRepository->getTicketByEvent($eventId);
 
         return $eventTicket;
     }

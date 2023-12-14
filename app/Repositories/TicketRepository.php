@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Ticket;
 
-class TicketRepositories
+class TicketRepository
 {
     public function getTicketByEvent($eventId)
     {

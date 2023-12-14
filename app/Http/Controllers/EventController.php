@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\EventDTO;
 use App\Services\EventService;
+use App\Services\TicketService;
 
 class EventController
 {
     protected $eventService;
+    protected $ticketService;
 
-    public function __construct(EventService $eventService) {
+    public function __construct(EventService $eventService, TicketService $ticketService) {
         $this->eventService = $eventService;
+        $this->ticketService = $ticketService;
     }
 
     public function getAllEventPage()
