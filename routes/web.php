@@ -35,6 +35,7 @@ Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'getAllEventPage')->name('event.get');
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
+    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->name('ticket.checkout');
     Route::post('/events', 'store');
 });
 
@@ -42,4 +43,4 @@ Route::controller(TicketController::class)->group(function () {
     Route::get('/tickets', 'getTicketByEvent')->name('ticket.get');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

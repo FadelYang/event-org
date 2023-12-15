@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\EventService;
 use App\Services\TicketService;
+use Illuminate\Http\Request;
 
 class EventController
 {
@@ -49,5 +50,12 @@ class EventController
         return view('pages.event.type', [
             'events' => $events
         ]);
+    }
+
+    public function getTicketCheckoutPage(Request $request)
+    {
+        dd($request, "You get this");
+
+
     }
 }

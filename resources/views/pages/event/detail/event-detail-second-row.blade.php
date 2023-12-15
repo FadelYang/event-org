@@ -5,12 +5,10 @@
     </div>
     <div class="w-full max-w-[811px] mt-3 xl:mt-0 block md:flex px-2 sm:px-0">
         <p class="text-xl lg:text-2xl font-bold me-auto">
-            @foreach ($eventTickets as $eventTicket)
-                {{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}
-            @endforeach
+            Berbayar
         </p>
         <div class="mt-3 sm:mt-0">
-            <a href="#daftarEvent"
+            <a href="#ticketSection"
                 class="py-2 px-5 border-2 border-black rounded text-lg xl:text-xl text-gray-200 bg-gray-800">Daftar
                 Event</a>
         </div>
