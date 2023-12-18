@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controller\TicketController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -34,7 +35,14 @@ Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'getAllEventPage')->name('event.get');
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
+    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->name('ticket.checkout');
+    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle');
+    // Route::post('/events/checkout/{orderId}', 'handleFinalCheckout')->name('ticket.checkout-final-handle');
     Route::post('/events', 'store');
 });
 
-require __DIR__.'/auth.php';
+Route::controller(TicketController::class)->group(function () {
+    Route::get('/tickets', 'getTicketByEvent')->name('ticket.get');
+});
+
+require __DIR__ . '/auth.php';

@@ -29,7 +29,6 @@ class EventFactory extends Factory
             'type' => fake()->randomElement(EventTypeEnum::toArray()),
             'location' => fake()->city(),
             'is_premium' => fake()->boolean(),
-            'ticket_price' => 25000,
             'potrait_banner' => null,
             'landscape_banner' => null,
             'start_date' => fake()->date(),
