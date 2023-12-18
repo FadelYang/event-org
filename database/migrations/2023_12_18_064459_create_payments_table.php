@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('order_id');
+            $table->string('snap_token')->nullable();
             $table->enum('status', PaymentStatusEnum::toArray());
             $table->unsignedBigInteger('ticket_id');
             // item detail will container key value item of order detail like ticket quantity and ticket

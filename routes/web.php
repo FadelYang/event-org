@@ -36,6 +36,8 @@ Route::controller(EventController::class)->group(function () {
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
     Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->name('ticket.checkout');
+    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle');
+    // Route::post('/events/checkout/{orderId}', 'handleFinalCheckout')->name('ticket.checkout-final-handle');
     Route::post('/events', 'store');
 });
 

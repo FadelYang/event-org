@@ -12,9 +12,11 @@ class payment extends Model
 
     protected $fillable = [
         'order_id',
+        'snap_token',
         'status',
         'price',
         'ticket_id',
+        'total_price',
         'item_detail',
         'customer_name',
         'customer_email',

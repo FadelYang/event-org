@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\payment;
 use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class EventController
 {
@@ -40,8 +42,7 @@ class EventController
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
         $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
-        Session::flash('event', $event);
-
+        Session::put('event', $event);
 
         return view('pages.event.detail.index', compact(
             ['event', 'eventTickets']
@@ -89,18 +90,62 @@ class EventController
         }
 
         $totalPrice = $totalTicket * $ticketPrice;
+        $orderId = Str::orderedUuid();
 
-        Session::flash('eventDetails', $eventDetail);
-        Session::flash('ticketCheckoutDetails', $eventDates);
-        Session::flash('totalTicket', $totalTicket);
-        Session::flash('totalPrice', $totalPrice);    
+        Session::put('ticketCheckoutDetails', $eventDates);
+        Session::put('totalPrice', $totalPrice);
+        Session::put('orderId', $orderId);
 
         return view('pages.event.checkout.ticket-checkout', [
             'event' => $event,
             'eventDetails' => $eventDetail,
             'ticketCheckoutDetails' => $eventDates,
-            'totalTicket' => $totalTicket, 
-            'totalPrice' => $totalPrice
+            'totalTicket' => $totalTicket,
+            'totalPrice' => $totalPrice,
+            'orderId' => $orderId,
+            'ticketId' => $request->ticket_id
         ]);
+    }
+
+    public function handleCheckout(Request $request, $orderId)
+    {
+        $eventDates = Session::get('ticketCheckoutDetails');
+        $orderId = Session::get('orderId');
+        $totalPrice = Session::get('totalPrice');
+
+        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        \Midtrans\Config::$isProduction = false;
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $orderId,
+                'gross_amount' => $totalPrice,
+            ),
+            'customer_details' => array(
+                'name' => $request->customer_name,
+                'email' => $request->customer_email,
+                'phone' => $request->customer_phone,
+            ),
+        );
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        $request->request->add([
+            'item_detail' => json_encode($eventDates),
+            'order_id' => $orderId,
+            'snap_token' => $snapToken
+        ]);
+
+        $payment = payment::create($request->all());
+
+
+        return view('pages.event.checkout.main-checkout', compact('payment', 'snapToken', 'orderId'));
+    }
+
+    public function handleFinalCheckout()
+    {
+        
     }
 }
