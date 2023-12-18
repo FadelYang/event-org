@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class EventController
 {
@@ -84,11 +85,16 @@ class EventController
 
         $totalPrice = $totalTicket * $ticketPrice;
 
-        return view('pages.event.ticket-checkout', [
+        Session::flash('eventDetails', $eventDetail);
+        Session::flash('ticketCheckoutDetails', $eventDates);
+        Session::flash('totalTicket', $totalTicket);
+        Session::flash('totalPrice', $totalPrice);    
+
+        return view('pages.event.checkout.ticket-checkout', [
             'eventDetails' => $eventDetail,
             'ticketCheckoutDetails' => $eventDates,
             'totalTicket' => $totalTicket, 
-            'totalPrice' => 'Rp. ' . number_format($totalPrice, 2, ',', '.')
+            'totalPrice' => $totalPrice
         ]);
     }
 }
