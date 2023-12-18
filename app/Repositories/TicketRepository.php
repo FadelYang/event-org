@@ -12,4 +12,11 @@ class TicketRepository
 
         return $eventTicket;
     }
+
+    public function getTicketById($ticketId)
+    {
+        $ticket =Ticket::where('id', $ticketId);
+
+        return $ticket;
+    }
 }

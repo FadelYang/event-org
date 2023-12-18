@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -54,8 +55,40 @@ class EventController
 
     public function getTicketCheckoutPage(Request $request)
     {
-        dd($request, "You get this");
+        $data = $request->all();
 
+        $eventDetail = [
+            'eventName' => $data['event_name'],
+            'ticketName' => $data['ticket_name'],
+            'ticketType' => $data['ticket_type'],
+        ];
 
+        $eventDates = array();
+
+        $totalTicket = 0;
+        $ticketPrice = $data['ticket_price'];
+
+        foreach ($data['days'] as $key => $day) {
+            if ($day != null) {
+                $totalTicket = $totalTicket + $day;
+                $formattedDate = date('D, d M Y', strtotime($data["event_date"] . ' + ' . $key . ' days'));
+                array_push(
+                    $eventDates,
+                    [
+                        'ticket_quantity' => $day,
+                        'event_date' => $formattedDate
+                    ]
+                );
+            }
+        }
+
+        $totalPrice = $totalTicket * $ticketPrice;
+
+        return view('pages.event.ticket-checkout', [
+            'eventDetails' => $eventDetail,
+            'ticketCheckoutDetails' => $eventDates,
+            'totalTicket' => $totalTicket, 
+            'totalPrice' => 'Rp. ' . number_format($totalPrice, 2, ',', '.')
+        ]);
     }
 }

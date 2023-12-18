@@ -19,4 +19,11 @@ class TicketService
 
         return $eventTicket;
     }
+
+    public function getTicketById($ticketId)
+    {
+        $ticket = $this->ticketRepository->getTicketById($ticketId);
+
+        return $ticket;
+    }
 }
