@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('pages.event.checkout.header')
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="items-center justify-center px-5 py-10 lg:p-5 hero-banner rounded-xl">
             @foreach ($eventDetails as $item)

@@ -37,3 +37,22 @@ Breadcrumbs::for('detailEvent', function (BreadcrumbTrail $trail, $event) {
     $trail->push($eventDetail->type, route('event.get.by-type', [$eventDetail->type]));
     $trail->push($eventDetail->title, route('event.detail', [$eventDetail->type, $eventDetail->slug]));
 });
+
+// home > event > event_type > event_name > checkout
+Breadcrumbs::for('checkoutTicket', function (BreadcrumbTrail $trail, $event) {
+    // I dont know why I should do it, there no another way to use the controller without create new object of every layer?
+    $eventRepository = new EventRepository();
+    $eventService = new EventService($eventRepository);
+
+    $ticketRepository = new TicketRepository();
+    $ticketService = new TicketService($ticketRepository);
+
+    $eventController = new EventController($eventService, $ticketService);
+
+    $eventDetail = $eventController->getEventDetail($event[0], $event[1]);
+
+    $trail->parent('event');
+    $trail->push($eventDetail->type, route('event.get.by-type', [$eventDetail->type]));
+    $trail->push($eventDetail->title, route('event.detail', [$eventDetail->type, $eventDetail->slug]));
+    $trail->push('Checkout');
+});

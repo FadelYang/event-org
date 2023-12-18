@@ -40,6 +40,9 @@ class EventController
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
         $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
+        Session::flash('event', $event);
+
+
         return view('pages.event.detail.index', compact(
             ['event', 'eventTickets']
         ));
@@ -57,6 +60,8 @@ class EventController
     public function getTicketCheckoutPage(Request $request)
     {
         $data = $request->all();
+
+        $event = Session::get('event');
 
         $eventDetail = [
             'eventName' => $data['event_name'],
@@ -91,6 +96,7 @@ class EventController
         Session::flash('totalPrice', $totalPrice);    
 
         return view('pages.event.checkout.ticket-checkout', [
+            'event' => $event,
             'eventDetails' => $eventDetail,
             'ticketCheckoutDetails' => $eventDates,
             'totalTicket' => $totalTicket, 
