@@ -1,31 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
+    <div class="mt-3 max-w-7xl mx-1 lg:px-8 xl:mx-auto h-auto">
+        <p class="font-bold text-4xl mb-5">
+            Your payment are pending
+        </p>
+        <div class="p-5 bg-gray-300 rounded-lg">
+            <p>order id: {{ $payment->id }}</p>
+            <p>order id: {{ $payment->status }}</p>
+            <p>Name: {{ $payment->customer_name }}</p>
+            <p>Email: {{ $payment->customer_email }}</p>
+            <p>Phone: {{ $payment->customer_phone }}</p>
+            <p>Customer address: {{ $payment->customer_address }}</p>
+            <button class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4"
+                id="pay-button">finish payment</button>
+        </div>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
-</head>
-
-<body>
-
-
-    pembayaran pending
-    <p>order id: {{ $payment->id }}</p>
-    <p>order id: {{ $payment->status }}</p>
-    <p>Name: {{ $payment->customer_name }}</p>
-    <p>Email: {{ $payment->customer_email }}</p>
-    <p>Phone: {{ $payment->customer_phone }}</p>
-    <p>Customer address: {{ $payment->customer_address }}</p>
-    <button class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4"
-        id="pay-button">finish payment</button>
-
-
-    {{-- <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
-        data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script> --}}
-
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script> 
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script type="text/javascript">
         // For example trigger on button clicked, or any time you need
         var payButton = document.getElementById('pay-button');
@@ -55,6 +46,4 @@
             })
         });
     </script>
-</body>
-
-</html>
+</x-app-layout>

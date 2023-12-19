@@ -143,9 +143,4 @@ class EventController
 
         return view('pages.event.checkout.main-checkout', compact('payment', 'snapToken', 'orderId'));
     }
-
-    public function handleFinalCheckout()
-    {
-        
-    }
 }
