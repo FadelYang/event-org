@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controller\TicketController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -23,7 +23,7 @@ Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,12 +33,11 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'getAllEventPage')->name('event.get');
+    Route::get('/events/create-event', 'createEvent')->middleware(['auth', 'verified'])->name('event.create');
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
-    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->name('ticket.checkout');
-    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle');
-    // Route::post('/events/checkout/{orderId}', 'handleFinalCheckout')->name('ticket.checkout-final-handle');
-    Route::post('/events', 'store');
+    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->middleware(['auth', 'verified'])->name('ticket.checkout');
+    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle')->middleware(['auth', 'verified']);
 });
 
 Route::controller(TicketController::class)->group(function () {

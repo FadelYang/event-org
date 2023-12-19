@@ -49,6 +49,11 @@ class EventController
         ));
     }
 
+    public function createEvent()
+    {
+        return view('pages.event.create.create-event');
+    }
+
     public function getEventsByTypePage($eventType)
     {
         $events = $this->eventService->getEventByType($eventType);
@@ -122,6 +127,7 @@ class EventController
             'transaction_details' => array(
                 'order_id' => $orderId,
                 'gross_amount' => $totalPrice,
+                'item-detail' => json_encode($eventDates)
             ),
             'customer_details' => array(
                 'name' => $request->customer_name,
