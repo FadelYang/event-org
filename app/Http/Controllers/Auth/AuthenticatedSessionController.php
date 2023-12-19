@@ -30,7 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('message', 'heyyyyyyyyyyyyy');
+        $username = Auth::user()->name;
+
+        return redirect()->intended(RouteServiceProvider::HOME)->with('alert-login', "Welcome $username");
     }
 
     /**

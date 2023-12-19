@@ -37,6 +37,15 @@
     {{-- javascript --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('javascript')
+    @if (session('alert-login'))
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Login success",
+            text: "{{ session('alert-login') }}",
+        });
+    </script>
+@endif
 </body>
 
 </html>
