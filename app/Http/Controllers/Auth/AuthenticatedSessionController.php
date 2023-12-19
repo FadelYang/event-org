@@ -46,6 +46,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success-alert', "Logout success")->with('alert-message', 'You are success log out');
+        return redirect('/')->with('success-alert', "Log out success")->with('alert-message', 'You are success log out');
     }
 }
