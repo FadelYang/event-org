@@ -49,8 +49,21 @@
         @if (Route::has('register'))
             <p>or</p>
 
-            <a href="{{ route('register') }}"
-                class="text-sm text-gray-700 dark:text-gray-500 underline">Create new account</a>
+            <a href="{{ route('register') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Create new
+                account</a>
         @endif
     </div>
+
+    @if (session('alert'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script type="text/javascript">
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "{{ session('alert') }}",
+            })
+        </script>
+    @endif
+
 </x-guest-layout>
