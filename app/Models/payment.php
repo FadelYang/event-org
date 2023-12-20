@@ -16,6 +16,7 @@ class payment extends Model
         'status',
         'price',
         'ticket_id',
+        'user_id',
         'total_price',
         'item_detail',
         'customer_name',

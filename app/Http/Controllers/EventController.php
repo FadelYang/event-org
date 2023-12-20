@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -142,7 +143,8 @@ class EventController
         $request->request->add([
             'item_detail' => json_encode($eventDates),
             'order_id' => $orderId,
-            'snap_token' => $snapToken
+            'snap_token' => $snapToken,
+            'user_id' => Auth::user()->id,
         ]);
 
         Session::put('orderId', $orderId);
@@ -163,6 +165,6 @@ class EventController
 
         $order->save();
 
-        return view('pages.event.payment.success-notification');
+        return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
     }
 }
