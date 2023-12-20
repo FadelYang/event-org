@@ -38,6 +38,7 @@ Route::controller(EventController::class)->group(function () {
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
     Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->middleware(['auth', 'verified'])->name('ticket.checkout');
     Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle')->middleware(['auth', 'verified']);
+    Route::get('/events/checkout/{orderId}/success', 'handleSuccessTransaction')->name('event.ticket.checkout-success');
 });
 
 Route::controller(TicketController::class)->group(function () {

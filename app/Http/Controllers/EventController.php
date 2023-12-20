@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PaymentStatusEnum;
 use App\Models\payment;
 use App\Models\Ticket;
 use App\Services\EventService;
@@ -144,9 +145,24 @@ class EventController
             'snap_token' => $snapToken
         ]);
 
+        Session::put('orderId', $orderId);
+
         $payment = payment::create($request->all());
 
 
         return view('pages.event.checkout.main-checkout', compact('payment', 'snapToken', 'orderId'));
+    }
+
+    public function handleSuccessTransaction($orderId)
+    {
+        $orderId = Session::get('orderId');
+
+        $order = Payment::where('order_id', $orderId)->first();
+
+        $order->status = PaymentStatusEnum::SUCCESS->value;
+
+        $order->save();
+
+        return view('pages.event.payment.success-notification');
     }
 }
