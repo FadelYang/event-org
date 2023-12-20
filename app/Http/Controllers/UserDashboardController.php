@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class UserDashboardController extends Controller
 {
     protected $paymentService;
 
@@ -13,12 +13,12 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
-    public function getUserPaymentHistory($userId)
+    public function getUserDashboard($userId)
     {
-        $payments = $this->paymentService->getUserPaymentHistory($userId);
+        $paymentHistories = $this->paymentService->getUserPaymentHistory($userId);
 
         return view('dashboard', [
-            'payments' => $payments
+            'paymentHistories' => $paymentHistories
         ]);
     }
 }
