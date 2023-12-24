@@ -16,7 +16,7 @@
                         {{ __('Home') }}
                     </x-nav-link>
                     <x-nav-link :href="route('event.create')" :active="request()->routeIs('event.create')">
-                        {{ __('Create Event') }}
+                        {{ __('Create Your Event') }}
                     </x-nav-link>
                 </div>
             </div>

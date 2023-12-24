@@ -19,6 +19,8 @@ class Event extends Model
         'description',
         'location',
         'is_premium',
+        'is_online',
+        'is_publish',
         'potrait_banner',
         'landscape_banner',
         'start_date',

@@ -167,4 +167,9 @@ class EventController
 
         return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
     }
+
+    public function getCreateBasicEventPage()
+    {
+        return view('pages.event.create.create-basic-event');
+    }
 }

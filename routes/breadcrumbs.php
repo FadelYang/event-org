@@ -62,3 +62,10 @@ Breadcrumbs::for('createEvent', function(BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Create Event', route('event.create'));
 });
+
+// home > create event > Event
+Breadcrumbs::for('createBasicEvent', function(BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Create Event', route('event.create'));
+    $trail->push('Basic', route('event.create.form-basic'));
+});
