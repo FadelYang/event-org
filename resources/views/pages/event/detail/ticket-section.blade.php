@@ -25,8 +25,9 @@
                                 <input type="text" name="event_date" value="{{ $event->start_date }}">
                             </div>
 
-                            <label for="day_{{ $i }}_ticket_quantity">Ticket quantity:</label>
-                            <select id="day_{{ $i }}_ticket_quantity" class="rounded"
+                            <label for="{{ $i }}_{{ $eventTicket->name }}">Ticket
+                                quantity:</label>
+                            <select id="{{ $i }}_{{ $eventTicket->name }}" class="ticket_selected"
                                 name="days[{{ $i }}]">
                                 <option value="">0</option>
                                 <option value="1">1</option>
@@ -58,10 +59,14 @@
 
             var totalDay = parseInt(document.getElementById("eventTotalDay").innerText);
             for (var i = 0; i <= totalDay; i++) {
-                var select = document.getElementById("day_" + i + "_ticket_quantity");
-                totalSelected += parseInt(select.value) || 0;
-            }
+                @foreach ($eventTickets as $eventTicket)
+                    var select = document.getElementById(i + "_{{ $eventTicket->name }}");
 
+                    if (select) {
+                        totalSelected += parseInt(select.value) || 0;
+                    }
+                @endforeach
+            }
             console.log(totalSelected);
 
             if (totalSelected < 1) {
