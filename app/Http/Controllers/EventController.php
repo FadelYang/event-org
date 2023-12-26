@@ -42,6 +42,7 @@ class EventController
     public function getEventDetailPage($eventType, $eventSlug)
     {
         $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+
         $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
         Session::put('event', $event);
@@ -73,11 +74,19 @@ class EventController
 
         $allTicketSelected = array();
 
+        $totalPrice = 0;
+
         $event = Session::get('event');
 
         foreach ($ticketSelected['ticket_selected'] as $ticketId => $totalTicketSelected) {
             if ($totalTicketSelected != null) {
                 $ticket = $this->ticketService->getTicketById($ticketId);
+
+                if ($ticket->price == null)  {
+                    $ticket->price = 0;
+                }
+                
+                $totalPrice = $totalPrice + (intval($ticket->ticket_price) * $totalTicketSelected);
 
                 $ticketData = [
                     'ticketName' => $ticket->name,
@@ -93,7 +102,8 @@ class EventController
         return view('pages.event.checkout.ticket-checkout', [
             'allTicketSelected' => $allTicketSelected,
             'event' => $event,
-            'orderId' => $orderId
+            'orderId' => $orderId,
+            'totalPrice' => $totalPrice
         ]);
     }
 
@@ -133,7 +143,6 @@ class EventController
         Session::put('orderId', $orderId);
 
         $payment = payment::create($request->all());
-
 
         return view('pages.event.checkout.main-checkout', compact('payment', 'snapToken', 'orderId'));
     }
