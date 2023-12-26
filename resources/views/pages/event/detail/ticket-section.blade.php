@@ -5,38 +5,28 @@
             <form action="{{ route('ticket.checkout', [$event->type, $event->slug]) }}" method="POST"
                 enctype="multipart/form-data" onsubmit="return handleSelectChange()">
                 @csrf
-                @for ($i = 0; $i <= $event->total_day; $i++)
+
+                @foreach ($eventTickets as $eventTicket)
                     <div class="p-10 bg-gray-400 mb-5 rounded">
-                        <p class="hidden" id="eventTotalDay">{{ $event->total_day }}</p>
                         <p class="ext-md lg:text-lg">Ticket day:
-                            {{ date('D, d M y', strtotime($event->start_date . ' + ' . $i . ' days')) }}</p>
-                        @foreach ($eventTickets as $eventTicket)
-                            <p>{{ $eventTicket->name }}</p>
-                            <p>{{ $eventTicket->type }}</p>
-                            <p>{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}
-                            </p>
+                            {{ date('D, d M y', strtotime($eventTicket->date)) }}</p>
 
-                            <div class="hidden">
-                                <input type="text" name="ticket_id" value="{{ $eventTicket->id }}">
-                                <input type="text" name="ticket_name" value="{{ $eventTicket->name }}">
-                                <input type="text" name="ticket_type" value="{{ $eventTicket->type }}">
-                                <input type="text" name="ticket_price" value="{{ $eventTicket->ticket_price }}">
-                                <input type="text" name="event_name" value="{{ $event->title }}">
-                                <input type="text" name="event_date" value="{{ $event->start_date }}">
-                            </div>
+                        <p>{{ $eventTicket->name }}</p>
+                        <p>{{ $eventTicket->type }}</p>
+                        <p>{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}
+                        </p>
 
-                            <label for="{{ $i }}_{{ $eventTicket->name }}">Ticket
-                                quantity:</label>
-                            <select id="{{ $i }}_{{ $eventTicket->name }}" class="ticket_selected"
-                                name="days[{{ $i }}]">
-                                <option value="">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        @endforeach
+                        <label for="{{ $eventTicket->id }}_{{ $eventTicket->name }}">Ticket
+                            quantity:</label>
+                        <select id="{{ $eventTicket->id }}_{{ $eventTicket->name }}" class="ticket_selected"
+                            name="ticket_selected[{{ $eventTicket->id }}]">
+                            <option value="">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                     </div>
-                @endfor
+                @endforeach
 
                 <div class="mt-3">
                     <button type="submit"
@@ -57,16 +47,14 @@
         function handleSelectChange(selectElement) {
             var totalSelected = 0;
 
-            var totalDay = parseInt(document.getElementById("eventTotalDay").innerText);
-            for (var i = 0; i <= totalDay; i++) {
-                @foreach ($eventTickets as $eventTicket)
-                    var select = document.getElementById(i + "_{{ $eventTicket->name }}");
+            @foreach ($eventTickets as $eventTicket)
+                var select = document.getElementById("{{ $eventTicket->id }}_{{ $eventTicket->name }}");
 
-                    if (select) {
-                        totalSelected += parseInt(select.value) || 0;
-                    }
-                @endforeach
-            }
+                if (select) {
+                    totalSelected += parseInt(select.value) || 0;
+                }
+            @endforeach
+
             console.log(totalSelected);
 
             if (totalSelected < 1) {

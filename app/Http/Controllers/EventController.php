@@ -67,50 +67,33 @@ class EventController
 
     public function getTicketCheckoutPage(Request $request)
     {
-        $data = $request->all();
+        $ticketSelected = $request->all();
+
+        $orderId = rand();
+
+        $allTicketSelected = array();
 
         $event = Session::get('event');
 
-        $eventDetail = [
-            'eventName' => $data['event_name'],
-            'ticketName' => $data['ticket_name'],
-            'ticketType' => $data['ticket_type'],
-        ];
+        foreach ($ticketSelected['ticket_selected'] as $ticketId => $totalTicketSelected) {
+            if ($totalTicketSelected != null) {
+                $ticket = $this->ticketService->getTicketById($ticketId);
 
-        $eventDates = array();
+                $ticketData = [
+                    'ticketName' => $ticket->name,
+                    'ticketPrice' => $ticket->ticket_price,
+                    'ticketDate' => $ticket->date,
+                    'totalTicketSelected' => $totalTicketSelected
+                ];
 
-        $totalTicket = 0;
-        $ticketPrice = $data['ticket_price'];
-
-        foreach ($data['days'] as $key => $day) {
-            if ($day != null) {
-                $totalTicket = $totalTicket + $day;
-                $formattedDate = date('D, d M Y', strtotime($data["event_date"] . ' + ' . $key . ' days'));
-                array_push(
-                    $eventDates,
-                    [
-                        'ticket_quantity' => $day,
-                        'event_date' => $formattedDate
-                    ]
-                );
+                array_push($allTicketSelected, $ticketData);
             }
         }
 
-        $totalPrice = $totalTicket * $ticketPrice;
-        $orderId = Str::orderedUuid();
-
-        Session::put('ticketCheckoutDetails', $eventDates);
-        Session::put('totalPrice', $totalPrice);
-        Session::put('orderId', $orderId);
-
         return view('pages.event.checkout.ticket-checkout', [
+            'allTicketSelected' => $allTicketSelected,
             'event' => $event,
-            'eventDetails' => $eventDetail,
-            'ticketCheckoutDetails' => $eventDates,
-            'totalTicket' => $totalTicket,
-            'totalPrice' => $totalPrice,
-            'orderId' => $orderId,
-            'ticketId' => $request->ticket_id
+            'orderId' => $orderId
         ]);
     }
 

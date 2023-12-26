@@ -1,18 +1,19 @@
 <x-app-layout>
     @include('pages.event.checkout.header')
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div class="items-center justify-center px-5 py-10 lg:p-5 hero-banner rounded-xl">
-            @foreach ($eventDetails as $item)
-                <p>{{ $item }}</p>
-            @endforeach
-            @foreach ($ticketCheckoutDetails as $item)
-                <p>{{ $item['ticket_quantity'] }}</p>
-                <p>{{ $item['event_date'] }}</p>
-            @endforeach
-            <p>Total ticket quantity: {{ $totalTicket }}</p>
-            <p>Total ticket price : {{ 'Rp. ' . number_format($totalPrice, 2, ',', '.') }}</p>
-
+        <div class="mb-2">
+            <p class="text-4xl">{{ $event->title }}</p>
+            <p class="text-2xl">Detail selected tickets</p>
         </div>
+        @foreach ($allTicketSelected as $ticketSelected)
+            <div class="items-center justify-center px-5 py-2 lg:p-5 rounded-xl bg-gray-200">
+                <p>{{ $ticketSelected['ticketName'] }}</p>
+                <p>{{ $ticketSelected['ticketPrice'] != null ? $ticketSelected['ticketPrice'] : 'Gratis' }}</p>
+                <p>{{ $ticketSelected['totalTicketSelected'] }}</p>
+                <p>{{ $ticketSelected['ticketDate'] }}</p>
+            </div>
+        @endforeach
+
         <div class="mt-5">
             <form action="{{ route('ticket.checkout-handle', $orderId) }}" method="post">
                 @csrf
@@ -48,10 +49,10 @@
                         :value="old('customer_NIK')" required autofocus autocomplete="customer_NIK" />
                     {{-- <x-input-error :messages="$errors->get('email')" class="mt-2" /> --}}
                 </div>
-                <div class="hidden">
+                {{-- <div class="hidden">
                     <input type="text" value="{{ $totalPrice }}" name="total_price">
                     <input type="text" value="{{ $ticketId }}" name="ticket_id">
-                </div>
+                </div> --}}
                 <button type="submit"
                     class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4">Checkout</button>
             </form>

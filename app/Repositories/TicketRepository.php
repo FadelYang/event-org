@@ -15,7 +15,7 @@ class TicketRepository
 
     public function getTicketById($ticketId)
     {
-        $ticket =Ticket::where('id', $ticketId);
+        $ticket =Ticket::find($ticketId);
 
         return $ticket;
     }
