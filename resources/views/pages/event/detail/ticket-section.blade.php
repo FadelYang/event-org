@@ -7,18 +7,18 @@
                 @csrf
 
                 @foreach ($eventTickets as $eventTicket)
-                    <div class="p-10 bg-gray-400 mb-5 rounded">
-                        <p class="ext-md lg:text-lg">Ticket day:
-                            {{ date('D, d M y', strtotime($eventTicket->date)) }}</p>
-
-                        <p>{{ $eventTicket->name }}</p>
-                        <p>{{ $eventTicket->type }}</p>
-                        <p>{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}
+                    <div class="p-5 bg-gray-400 mb-2 rounded">
+                        <p class="text-xl mb-2"><span
+                                class="font-bold">{{ date('D, d M y', strtotime($eventTicket->date)) }}</span>
+                        </p>
+                        <p>type: <span class="font-bold">{{ $eventTicket->name }}</span></p>
+                        <p>price: <span
+                                class="font-bold">{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}</span>
                         </p>
 
                         <label for="{{ $eventTicket->id }}_{{ $eventTicket->name }}">Ticket
                             quantity:</label>
-                        <select id="{{ $eventTicket->id }}_{{ $eventTicket->name }}" class="ticket_selected"
+                        <select id="{{ $eventTicket->id }}_{{ $eventTicket->name }}" class="ticket_selected border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                             name="ticket_selected[{{ $eventTicket->id }}]">
                             <option value="">0</option>
                             <option value="1">1</option>

@@ -6,11 +6,11 @@
             <p class="text-2xl">Detail selected tickets</p>
         </div>
         @foreach ($allTicketSelected as $ticketSelected)
-            <div class="items-center justify-center px-5 py-2 lg:p-5 rounded-xl bg-gray-200">
-                <p>{{ $ticketSelected['ticketName'] }}</p>
-                <p>{{ $ticketSelected['ticketPrice'] != null ? $ticketSelected['ticketPrice'] : 'Gratis' }}</p>
-                <p>{{ $ticketSelected['totalTicketSelected'] }}</p>
-                <p>{{ $ticketSelected['ticketDate'] }}</p>
+            <div class="items-center justify-center px-5 py-2 lg:p-5 rounded-xl bg-gray-200 mb-2">
+                <p>type: <span class="font-bold">{{ $ticketSelected['ticketName'] }}</span></p>
+                <p>price: <span class="font-bold">{{ $ticketSelected['ticketPrice'] == null ? 'Gratis' : 'Rp. ' . number_format($ticketSelected['ticketPrice'], 2, ',', '.') }}</span></p>
+                <p>Total: <span class="font-bold">{{ $ticketSelected['totalTicketSelected'] }}</span></p>
+                <p>Date: <span class="font-bold">{{ date('D, d M y', strtotime($ticketSelected['ticketDate'])) }}</span></p>
             </div>
         @endforeach
 
