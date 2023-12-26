@@ -36,8 +36,6 @@ class EventFactory extends Factory
             'landscape_banner' => null,
             'start_date' => fake()->date(),
             'total_day' => 3,
-            'start_time' => null,
-            'end_time' => null,
         ];
     }
 }

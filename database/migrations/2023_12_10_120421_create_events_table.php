@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->unsignedBigInteger('user_id');
-            // $table->unsignedBigInteger('organizer');
             $table->string('slug')->unique();
             $table->enum('type', EventTypeEnum::toArray());
             $table->longText('description');
@@ -30,8 +29,6 @@ return new class extends Migration
             $table->string('landscape_banner')->nullable();
             $table->date('start_date');
             $table->integer('total_day');
-            $table->date('start_time')->nullable();
-            $table->date('end_time')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -24,9 +24,7 @@ class Event extends Model
         'potrait_banner',
         'landscape_banner',
         'start_date',
-        'end_date',
-        'start_time',
-        'end_time',
+        'end_date'
     ];
 
     protected $attributes = [
