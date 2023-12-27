@@ -5,7 +5,7 @@
     </a>
     <div class="event-card-detail mx-2">
         <div class="flex mt-1 between">
-            <a class="text-xl font-bold me-auto" href="detailEventUrl">{{ $item->title }}</a>
+            <a class="text-xl font-bold me-auto max-w-[240px] overflow-hidden overflow-ellipsis whitespace-nowrap" href="detailEventUrl">{{ $item->title }}</a>
             <p class="text-lg font-bold">Online</p>
         </div>
         <div class="mt-1">
