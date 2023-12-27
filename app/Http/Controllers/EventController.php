@@ -72,35 +72,37 @@ class EventController
 
         $orderId = rand();
 
-        $allTicketSelected = array();
+        $allSelectedTickets = array();
 
         $totalPrice = 0;
 
         $event = Session::get('event');
 
-        foreach ($ticketSelected['ticket_selected'] as $ticketId => $totalTicketSelected) {
-            if ($totalTicketSelected != null) {
+        foreach ($ticketSelected['ticket_selected'] as $ticketId => $totalSelectedTickets) {
+            if ($totalSelectedTickets != null) {
                 $ticket = $this->ticketService->getTicketById($ticketId);
 
-                if ($ticket->price == null)  {
+                if ($ticket->price == null) {
                     $ticket->price = 0;
                 }
-                
-                $totalPrice = $totalPrice + (intval($ticket->ticket_price) * $totalTicketSelected);
+
+                $totalPrice = $totalPrice + (intval($ticket->ticket_price) * $totalSelectedTickets);
 
                 $ticketData = [
                     'ticketName' => $ticket->name,
                     'ticketPrice' => $ticket->ticket_price,
                     'ticketDate' => $ticket->date,
-                    'totalTicketSelected' => $totalTicketSelected
+                    'totalSelectedTickets' => $totalSelectedTickets
                 ];
 
-                array_push($allTicketSelected, $ticketData);
+                array_push($allSelectedTickets, $ticketData);
             }
         }
 
+        Session::put('allSelectedTickets', $allSelectedTickets);
+
         return view('pages.event.checkout.ticket-checkout', [
-            'allTicketSelected' => $allTicketSelected,
+            'allSelectedTickets' => $allSelectedTickets,
             'event' => $event,
             'orderId' => $orderId,
             'totalPrice' => $totalPrice
@@ -109,9 +111,25 @@ class EventController
 
     public function handleCheckout(Request $request, $orderId)
     {
-        $eventDates = Session::get('ticketCheckoutDetails');
-        $orderId = Session::get('orderId');
-        $totalPrice = Session::get('totalPrice');
+        $detailCheckoutData = $request->all();
+
+        $detailCustomerData = array();
+
+        $customerData = [
+            'customerName' => $detailCheckoutData['customer_name'],
+            'customerEmail' => $detailCheckoutData['customer_email'],
+            'customerPhone' => $detailCheckoutData['customer_phone'],
+            'customerAddress' => $detailCheckoutData['customer_address'],
+            'customerNIK' => $detailCheckoutData['customer_NIK'],
+        ];
+
+        array_push($detailCustomerData, $customerData);
+
+        $orderId = $detailCheckoutData['order_id'];
+
+        $totalPrice = $detailCheckoutData['total_price'];
+
+        $allSelectedTickets = Session::get('allSelectedTickets');
 
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = false;
@@ -122,7 +140,7 @@ class EventController
             'transaction_details' => array(
                 'order_id' => $orderId,
                 'gross_amount' => $totalPrice,
-                'item-detail' => json_encode($eventDates)
+                'item-detail' => json_encode($allSelectedTickets)
             ),
             'customer_details' => array(
                 'name' => $request->customer_name,
@@ -134,7 +152,8 @@ class EventController
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
         $request->request->add([
-            'item_detail' => json_encode($eventDates),
+            'item_detail' => json_encode($allSelectedTickets),
+            'customer_detail' => json_encode($detailCustomerData),
             'order_id' => $orderId,
             'snap_token' => $snapToken,
             'user_id' => Auth::user()->id,
@@ -142,18 +161,26 @@ class EventController
 
         Session::put('orderId', $orderId);
 
+        // it will create new item if refresh
+        // need updated_at field in Payment table for got the newest update
         $payment = payment::create($request->all());
 
-        return view('pages.event.checkout.main-checkout', compact('payment', 'snapToken', 'orderId'));
+        return view('pages.event.checkout.main-checkout', [
+            'payment' => $payment,
+            'totalPrice' => $totalPrice,
+            'snapToken' => $snapToken,
+            'orderId' => $orderId,
+            'allSelectedTickets' => $allSelectedTickets,
+            'detailCustomerData' => $detailCustomerData,
+        ]);
     }
 
     public function handleSuccessTransaction($orderId)
     {
         $orderId = Session::get('orderId');
 
-        $order = Payment::where('order_id', $orderId)->first();
 
-        $order->status = PaymentStatusEnum::SUCCESS->value;
+        $order = Payment::where('order_id', $orderId)->update(['status' => PaymentStatusEnum::SUCCESS->value]);
 
         $order->save();
 
