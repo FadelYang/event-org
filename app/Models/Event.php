@@ -16,7 +16,7 @@ class Event extends Model
         'user_id',
         'organizer_name',
         'PIC_email',
-        'PIC_phone_number',
+        'PIC_phone',
         'organizer_name',
         'slug',
         'type',
@@ -26,6 +26,7 @@ class Event extends Model
         'is_online',
         'is_publish',
         'potrait_banner',
+        'total_day',
         'landscape_banner',
         'start_date',
         'end_date'

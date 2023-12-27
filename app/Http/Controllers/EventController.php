@@ -193,8 +193,15 @@ class EventController
 
     public function getCreateTicketPage(CreateEventRequest $request)
     {
-        $validated = $request->validated();
+        $request->validated();
 
-        dd($validated);
+        $slug = Str::slug($request->title . rand());
+
+        $request->merge([
+            'user_id' => 1,
+            'slug' => $slug
+        ]);
+
+        $this->eventService->createEvent($request->all());
     }
 }

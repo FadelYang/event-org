@@ -67,4 +67,9 @@ class EventRepository
 
         return $events;
     }
+
+    public function createEvent($data)
+    {
+        return Event::create($data);
+    }
 }

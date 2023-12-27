@@ -66,4 +66,9 @@ class EventService
 
         return $events;
     }
+
+    public function createEvent($data)
+    {
+        return $this->eventRepository->createEvent($data);
+    }
 }

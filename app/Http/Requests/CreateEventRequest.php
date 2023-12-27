@@ -28,11 +28,13 @@ class CreateEventRequest extends FormRequest
             'PIC_email' => 'required|email|max:50',
             'PIC_phone' => 'required|max:15',
             'title' => 'required|max:50',
+            'description' => 'required|max:500',
             'is_online' => 'required|boolean',
             'location' => 'required|max:200',
             'potrait_banner' => 'nullable|mimes:jpg,png',
             'landscape_banner' => 'nullable|mimes:jpg,png|max:1024',
-            'capacity' => 'required|integer'
+            'start_date' => 'required',
+            'total_day' => 'integer|min:1',
         ];
     }
 

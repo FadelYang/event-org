@@ -74,6 +74,14 @@
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
                     <div class="mb-1">
+                        <x-input-label for="description" :value="__('Deskripsi Event')" />
+                        <textarea id="description" rows="4"
+                            class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            type="text" name="description" required autofocus
+                            autocomplete="description">{{ old('description') }}</textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div>
+                    <div class="mb-1">
                         <x-input-label :value="__('Tempat pelaksanaan event')" />
                         <div>
                             <input type="radio" id="online_checked" name="is_online" value="1" checked />
@@ -93,6 +101,18 @@
                             type="text" name="location" required autofocus
                             autocomplete="location">{{ old('location') }}</textarea>
                         <x-input-error :messages="$errors->get('location')" class="mt-2" />
+                    </div>
+                    <div class="mb-1">
+                        <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
+                        <x-text-input id="start_date" class="block mt-1 w-full" type="date" name="start_date"
+                            :value="old('start_date')" required autofocus autocomplete="start_date" min="{{ date('Y-m-d') }}" />
+                        <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                    </div>
+                    <div class="mb-1">
+                        <x-input-label for="total_day" :value="__('Total hari acara berlangsung')" />
+                        <x-text-input id="total_day" class="block mt-1 w-full" type="number" name="total_day"
+                            :value="old('total_day')" required autofocus autocomplete="total_day" min="1" />
+                        <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                     </div>
                     <div class="mb-1">
                         <x-input-label for="potrait_banner" :value="__('Potrait banner (rekomendasi ukuran 324px x 405px)')" />
