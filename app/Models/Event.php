@@ -33,7 +33,7 @@ class Event extends Model
     ];
 
     protected $attributes = [
-        'is_premium' => false,
+        'is_premium' => true,
         'is_publish' => false
     ];
 

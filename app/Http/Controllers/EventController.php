@@ -203,5 +203,7 @@ class EventController
         ]);
 
         $this->eventService->createEvent($request->all());
+
+        return redirect('home')->with('success-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
     }
 }

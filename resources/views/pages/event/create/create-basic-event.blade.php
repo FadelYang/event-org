@@ -74,7 +74,7 @@
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
                     <div class="mb-1">
-                        <x-input-label for="description" :value="__('Deskripsi Event')" />
+                        <x-input-label for="description" :value="__('Deskripsi Singkat Event')" />
                         <textarea id="description" rows="4"
                             class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                             type="text" name="description" required autofocus
