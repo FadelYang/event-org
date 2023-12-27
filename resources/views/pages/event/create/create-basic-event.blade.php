@@ -42,7 +42,7 @@
         </div>
         <h1 class="text-4xl font-bold mb-5">Lengkapi form di bawah untuk membuat event</h1>
         <div class="mt-5">
-            <form action="{{ route('event.create.ticket') }}" method="post" class="flex flex-col gap-3">
+            <form action="{{ route('event.create.ticket') }}" method="post" class="flex flex-col gap-3" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-2">
                     <h2 class="text-2xl font-bold mb-2">Detail Penyelenggara</h2>

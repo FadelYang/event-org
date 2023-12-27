@@ -25,7 +25,7 @@ html {
 }
 
 .opacity-hovering {
-    @apply opacity-80 hover:opacity-100;
+    @apply opacity-100 hover:opacity-90;
 }
 
 .image-card-placeholder {
