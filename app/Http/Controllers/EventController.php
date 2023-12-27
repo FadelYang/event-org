@@ -163,6 +163,7 @@ class EventController
 
         // it will create new item if refresh
         // need updated_at field in Payment table for got the newest update
+        // or update all record by order_id
         $payment = payment::create($request->all());
 
         return view('pages.event.checkout.main-checkout', [
@@ -179,10 +180,7 @@ class EventController
     {
         $orderId = Session::get('orderId');
 
-
-        $order = Payment::where('order_id', $orderId)->update(['status' => PaymentStatusEnum::SUCCESS->value]);
-
-        $order->save();
+        Payment::where('order_id', $orderId)->update(['status' => PaymentStatusEnum::SUCCESS->value]);
 
         return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
     }
