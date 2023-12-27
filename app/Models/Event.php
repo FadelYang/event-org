@@ -14,6 +14,10 @@ class Event extends Model
     protected $fillable = [
         'title',
         'user_id',
+        'organizer_name',
+        'PIC_email',
+        'PIC_phone_number',
+        'organizer_name',
         'slug',
         'type',
         'description',
@@ -28,7 +32,8 @@ class Event extends Model
     ];
 
     protected $attributes = [
-        'is_premium' => false
+        'is_premium' => false,
+        'is_publish' => false
     ];
 
     public function eventCreator(): HasOne

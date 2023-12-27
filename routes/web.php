@@ -34,6 +34,7 @@ Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'getAllEventPage')->name('event.get');
     Route::get('/events/create/basic', 'getCreateBasicEventPage')->name('event.create.form-basic');
     Route::get('/events/create', 'createEvent')->middleware(['auth', 'verified'])->name('event.create');
+    Route::post('/events/create/ticket', 'getCreateTicketPage')->name('event.create.ticket');
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
     Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->middleware(['auth', 'verified'])->name('ticket.checkout');

@@ -23,6 +23,10 @@ class EventFactory extends Factory
 
         return [
             'title' => $title,
+            'orginazer_name' => $title,
+            'orginazer_name' => $title,
+            'PIC_email' => fake()->email(),
+            'PIC_phone_number' => fake()->phoneNumber(),
             'user_id' => '1',
             // 'organizer' => $title,
             'description' => fake()->paragraph(),

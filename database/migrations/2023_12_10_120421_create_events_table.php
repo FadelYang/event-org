@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->unsignedBigInteger('user_id');
             $table->string('slug')->unique();
+            $table->string('organizer_name');
+            $table->string('PIC_email');
+            $table->string('PIC_phone_number');
             $table->enum('type', EventTypeEnum::toArray());
             $table->longText('description');
             $table->string('location');

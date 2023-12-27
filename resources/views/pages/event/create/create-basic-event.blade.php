@@ -42,7 +42,7 @@
         </div>
         <h1 class="text-4xl font-bold mb-5">Lengkapi form di bawah untuk membuat event</h1>
         <div class="mt-5">
-            <form action="#" method="post" class="flex flex-col gap-3">
+            <form action="{{ route('event.create.ticket') }}" method="post" class="flex flex-col gap-3">
                 @csrf
                 <div class="mb-2">
                     <h2 class="text-2xl font-bold mb-2">Detail Penyelenggara</h2>
@@ -50,17 +50,19 @@
                         <x-input-label for="organizer_name" :value="__('Organisasi penyelenggara')" />
                         <x-text-input id="organizer_name" class="block mt-1 w-full" type="text" name="organizer_name"
                             :value="old('organizer_name')" required autofocus autocomplete="orgnainzer_name" />
+                        <x-input-error :messages="$errors->get('organizer_name')" class="mt-2" />
                     </div>
                     <div class="mb-1">
-                        <x-input-label for="organizer_email" :value="__('Email penanggung jawab')" />
-                        <x-text-input id="organizer_email" class="block mt-1 w-full" type="email"
-                            name="organizer_email" :value="old('organizer_email')" required autofocus autocomplete="organizer_email" />
+                        <x-input-label for="PIC_email" :value="__('Email penanggung jawab')" />
+                        <x-text-input id="organizer_email" class="block mt-1 w-full" type="email" name="PIC_email"
+                            :value="old('PIC_email')" required autofocus autocomplete="organizer_email" />
+                        <x-input-error :messages="$errors->get('PIC_email')" class="mt-2" />
                     </div>
                     <div class="mb-1">
-                        <x-input-label for="organizer_phone" :value="__('Nomor telepon penanggung jawab')" />
-                        <x-text-input id="organizer_phone" class="block mt-1 w-full" type="text"
-                            name="organizer_phone" :value="old('organizer_phone')" required autofocus autocomplete="organizer_phone"
-                            placeholder="+628xxx" />
+                        <x-input-label for="PIC_phone" :value="__('Nomor telepon penanggung jawab')" />
+                        <x-text-input id="PIC_phone" class="block mt-1 w-full" type="text" name="PIC_phone"
+                            :value="old('PIC_phone')" required autofocus autocomplete="organizer_phone" placeholder="+628xxx" />
+                        <x-input-error :messages="$errors->get('PIC_phone')" class="mt-2" />
                     </div>
                 </div>
                 <div class="mb-2">
@@ -69,6 +71,7 @@
                         <x-input-label for="title" :value="__('Nama Event')" />
                         <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
                             :value="old('title')" required autofocus autocomplete="title" />
+                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
                     <div class="mb-1">
                         <x-input-label :value="__('Tempat pelaksanaan event')" />
@@ -76,38 +79,33 @@
                             <input type="radio" id="online_checked" name="is_online" value="1" checked />
                             <label for="online">Online</label>
                         </div>
-    
+
                         <div>
                             <input type="radio" id="offline_checked" name="is_online" value="0" />
                             <label for="offline">Offline</label>
                         </div>
-    
+
                     </div>
                     <div class="mb-1">
-                        <x-input-label for="customer_address" :value="__('Detail tempat pelaksanaan (isi alamat tempat atau link jika online)')" />
-                        <textarea id="customer_address" rows="4"
+                        <x-input-label for="location" :value="__('Detail tempat pelaksanaan (isi alamat tempat atau link jika online)')" />
+                        <textarea id="location" rows="4"
                             class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                            type="text" name="customer_address" :value="old('customer_address')" required autofocus
-                            autocomplete="customer_address"></textarea>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            type="text" name="location" required autofocus
+                            autocomplete="location">{{ old('location') }}</textarea>
+                        <x-input-error :messages="$errors->get('location')" class="mt-2" />
                     </div>
                     <div class="mb-1">
                         <x-input-label for="potrait_banner" :value="__('Potrait banner (rekomendasi ukuran 324px x 405px)')" />
                         <input type="file" name="potrait_banner" id="">
-                        <x-input-error :messages="__('hanya menerima jpg, jpeg, png dan maksimal 1mb')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('potrait_banner')" class="mt-2" />
                     </div>
                     <div class="mb-1">
                         <x-input-label for="landscape_banner" :value="__('Landscape banner (rekomendasi ukuran 811px x 374px)')" />
                         <input type="file" name="landscape_banner" id="">
-                        <x-input-error :messages="__('hanya menerima jpg, jpeg, png dan maksimal 1mb')" class="mt-2" />
-                    </div>
-                    <div class="mb-1">
-                        <x-input-label for="capacity" :value="__('Kapasitas Event')" />
-                        <x-text-input id="capacity" class="block mt-1 w-full" type="number" name="capacity"
-                        :value="old('capacity')" required autofocus autocomplete="capacity" />
+                        <x-input-error :messages="$errors->get('landscape_banner')" class="mt-2" />
                     </div>
                 </div>
-               
+
 
                 <button type="submit"
                     class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4">Buat
@@ -116,4 +114,16 @@
         </div>
     </div>
     @include('components.footer')
+
+    @push('javascript')
+        @if ($errors->any())
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops..",
+                    text: "Something went wrong, please check the form!",
+                });
+            </script>
+        @endif
+    @endpush
 </x-app-layout>

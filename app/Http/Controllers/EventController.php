@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\PaymentStatusEnum;
+use App\Http\Requests\CreateEventRequest;
 use App\Models\payment;
 use App\Models\Ticket;
 use App\Services\EventService;
@@ -188,5 +189,12 @@ class EventController
     public function getCreateBasicEventPage()
     {
         return view('pages.event.create.create-basic-event');
+    }
+
+    public function getCreateTicketPage(CreateEventRequest $request)
+    {
+        $validated = $request->validated();
+
+        dd($validated);
     }
 }
