@@ -49,21 +49,21 @@ class EventRepository
 
     public function getAllPilihanEvent()
     {
-        $events = Event::where('is_premium', true)->get();
+        $events = Event::where('is_premium', true)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllPelatihanEvent()
     {
-        $events = Event::where('type', EventTypeEnum::PELATIHAN->value)->get();
+        $events = Event::where('type', EventTypeEnum::PELATIHAN->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllSeminarEvent()
     {
-        $events = Event::where('type', EventTypeEnum::SEMINAR->value)->get();
+        $events = Event::where('type', EventTypeEnum::SEMINAR->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
