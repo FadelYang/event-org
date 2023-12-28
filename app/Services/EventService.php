@@ -71,4 +71,9 @@ class EventService
     {
         return $this->eventRepository->createEvent($data);
     }
+
+    public function getEventByUserId($userId)
+    {
+        return $this->eventRepository->getEventByUserID($userId);
+    }
 }

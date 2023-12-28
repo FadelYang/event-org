@@ -72,4 +72,9 @@ class EventRepository
     {
         return Event::create($data);
     }
+
+    public function getEventByUserId($userId)
+    {
+        return Event::where('user_id', $userId)->get();
+    }
 }
