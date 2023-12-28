@@ -30,7 +30,7 @@ class CreateEventRequest extends FormRequest
             'title' => 'required|max:50',
             'description' => 'required|max:2000',
             'is_online' => 'required|boolean',
-            'location' => 'required|max:50',
+            'location' => 'required|max:200',
             'potrait_banner' => 'nullable|image|mimes:png,jpg,jpeg|max:1024',
             'landscape_banner' => 'nullable|image|mimes:png,jpg,jpeg|max:1024',
             'start_date' => 'required',
