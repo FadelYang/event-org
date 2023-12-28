@@ -19,15 +19,20 @@
                 </div>
                 {{-- table --}}
                 <div class="p-6">
-                    @foreach ($paymentHistories as $item)
-                        {{ $item->id }}
-                        {{ $item->customer_name }}
-                        {{ $item->ticket_id }}
-                        {{ $item->total_price }}
-                        {{ $item->status }}
-                        <a href="/">Invoice</a>
-                        <br>
-                    @endforeach
+                    @if (count($paymentHistories) != 0)
+                        @foreach ($paymentHistories as $item)
+                            {{ $item->id }}
+                            {{ $item->customer_name }}
+                            {{ $item->ticket_id }}
+                            {{ $item->total_price }}
+                            {{ $item->status }}
+                            <a href="/">Invoice</a>
+                            <br>
+                        @endforeach
+                    @else
+                        <p class="mt-6">You don't have any purchase history</p>
+                    @endif
+
                 </div>
             </div>
 
@@ -35,9 +40,17 @@
                 <div class="p-6 text-gray-900 text-xl font-bold">
                     Your Event
                 </div>
-                {{-- table --}}
                 <div class="p-6">
-                    You have no event
+                    @if (count($createEventHistories) != 0)
+                        @foreach ($createEventHistories as $item)
+                            {{ $item->id }}
+                            {{ $item->title }}
+                            {{ $item->status }}
+                            <br>
+                        @endforeach
+                    @else
+                        <p class="mt-6">You don't have any create event history</p>
+                    @endif
                 </div>
             </div>
         </div>

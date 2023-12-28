@@ -3,7 +3,7 @@
         {{ $event->title }}
     </h2>
     <div class="opacity-80 block lg:flex lg:gap-3">
-        <div class="flex items-center gap-1">
+        <div class="flex gap-1">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -13,7 +13,7 @@
             <p>{{ date('D, d M y', strtotime($event->start_date)) }}</p>
         </div>
         <p class="hidden lg:block"> - </p>
-        <div class="flex items-center gap-1">
+        <div class="flex gap-1">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-5 min-h-[1.25rem] min-w-[1.25rem]">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
