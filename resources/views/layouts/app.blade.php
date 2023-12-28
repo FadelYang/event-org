@@ -46,6 +46,15 @@
             });
         </script>
     @endif
+    @if (session('error-alert'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "{{ session('error-alert') }}",
+                text: "{{ session('alert-message') }}",
+            });
+        </script>
+    @endif
     {{-- logout confirmation --}}
     <script>
         function logoutConfirmation(event) {

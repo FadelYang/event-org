@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('ticket_price');
             $table->string('quantity');
+            $table->boolean('is_all_day_pass');
             $table->unsignedBigInteger('event_id');
             $table->timestamps();
 

@@ -193,40 +193,61 @@ class EventController
 
     public function getCreateTicketPage(CreateEventRequest $request)
     {
-        $requestData = $request->all();
+        try {
+            $requestData = $request->all();
 
-        $request->validated();
+            $request->validated();
 
-        $slug = Str::slug($request->title . rand());
+            $slug = Str::slug($request->title . rand());
 
-        $requestData['user_id'] = Auth::user()->id;
+            $requestData['user_id'] = Auth::user()->id;
 
-        $requestData['slug'] = $slug;
+            $requestData['slug'] = $slug;
 
-        // handle store image
-        if ($request->potrait_banner) {
-            $potraitBannerName = time() . '.' . $request->potrait_banner->extension();
+            // handle store image
+            if ($request->potrait_banner) {
+                $potraitBannerName = time() . '.' . $request->potrait_banner->extension();
 
-            $requestData['potrait_banner'] = $potraitBannerName;
+                $requestData['potrait_banner'] = $potraitBannerName;
 
-            $request->potrait_banner->move(public_path('images/potraitBanner'), $potraitBannerName);
+                $request->potrait_banner->move(public_path('images/potraitBanner'), $potraitBannerName);
+            }
+
+            if ($request->landscape_banner) {
+                $landscapeBannerName = time() . '.' . $request->landscape_banner->extension();
+
+                $requestData['landscape_banner'] = $landscapeBannerName;
+
+                $request->landscape_banner->move(public_path('images/landscapeBanner'), $landscapeBannerName);
+            }
+
+            $userId = Auth::user()->id;
+
+            $request->merge([
+                'user_id' => $userId,
+                'slug' => $slug
+            ]);
+
+            $this->eventService->createEvent($requestData);
+
+            Session::flash('success-alert', 'Create Event Success');
+
+            Session::flash('alert-message', 'create event success, please add detail ticket here');
+
+            $event = $this->eventService->getLatestCreatedEventByUser($userId);
+
+            $eventSlug = $event->slug;
+
+            return view('pages.event.create.create-ticket', [
+                'event' => $event,
+                'eventSlug' => $eventSlug
+            ]);
+        } catch (\Throwable $th) {
+            $event = $this->eventService->getLatestCreatedEventByUser($userId);
+
+            return view('pages.event.create.create-ticket', [
+                'event' => $event,
+            ])->with('error-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
         }
-
-        if ($request->landscape_banner) {
-            $landscapeBannerName = time() . '.' . $request->landscape_banner->extension();
-
-            $requestData['landscape_banner'] = $landscapeBannerName;
-
-            $request->landscape_banner->move(public_path('images/landscapeBanner'), $landscapeBannerName);
-        }
-
-        $request->merge([
-            'user_id' => 1,
-            'slug' => $slug
-        ]);
-
-        $this->eventService->createEvent($requestData);
-
-        return redirect('home')->with('success-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
     }
 }

@@ -77,4 +77,9 @@ class EventRepository
     {
         return Event::where('user_id', $userId)->get();
     }
+
+    public function getLatestCreatedEventByUser($userId)
+    {
+        return Event::where('user_id', $userId)->orderBy('id', 'desc')->first();
+    }
 }

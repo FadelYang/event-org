@@ -76,4 +76,9 @@ class EventService
     {
         return $this->eventRepository->getEventByUserID($userId);
     }
+
+    public function getLatestCreatedEventByUser($userId)
+    {
+        return $this->eventRepository->getLatestCreatedEventByUser($userId);
+    }
 }

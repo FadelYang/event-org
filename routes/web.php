@@ -44,6 +44,7 @@ Route::controller(EventController::class)->group(function () {
 
 Route::controller(TicketController::class)->group(function () {
     Route::get('/tickets', 'getTicketByEvent')->name('ticket.get');
+    Route::get('/tickets/{eventSlug}', 'createTicketForEvent')->name('ticket.create');
 });
 
 require __DIR__ . '/auth.php';
