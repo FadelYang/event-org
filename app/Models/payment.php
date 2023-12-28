@@ -15,15 +15,10 @@ class payment extends Model
         'snap_token',
         'status',
         'price',
-        'ticket_id',
+        'user_id',
         'total_price',
         'item_detail',
-        'customer_name',
-        'customer_email',
-        'customer_phone',
-        'customer_address',
-        'customer_NIK',
-        'checkout_link',
+        'customer_detail',
     ];
 
     protected $attributes = [

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controller;
+namespace App\Http\Controllers;
 
 use App\Services\TicketService;
+use Illuminate\Http\Request;
 
 class TicketController
 {
@@ -18,5 +19,10 @@ class TicketController
         $eventTickets = $this->ticketService->getTicketByEvent($eventId);
 
         return view('pages.event.detail.index', ['eventTicket' => $eventTickets]);
+    }
+
+    public function createTicketForEvent(Request $request)
+    {
+        dd($request);
     }
 }

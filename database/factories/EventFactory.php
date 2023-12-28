@@ -23,18 +23,22 @@ class EventFactory extends Factory
 
         return [
             'title' => $title,
+            'organizer_name' => $title,
+            'PIC_email' => fake()->email(),
+            'PIC_phone' => fake()->phoneNumber(),
             'user_id' => '1',
+            // 'organizer' => $title,
             'description' => fake()->paragraph(),
             'slug' => $titleSlug,
             'type' => fake()->randomElement(EventTypeEnum::toArray()),
             'location' => fake()->city(),
             'is_premium' => fake()->boolean(),
+            'is_publish' => fake()->boolean(),
+            'is_online' => fake()->boolean(),
             'potrait_banner' => null,
             'landscape_banner' => null,
             'start_date' => fake()->date(),
             'total_day' => 3,
-            'start_time' => null,
-            'end_time' => null,
         ];
     }
 }

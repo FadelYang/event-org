@@ -17,7 +17,7 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 // home > event
 Breadcrumbs::for('event', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('event', route('event.get'));
+    $trail->push('Event', route('event.get'));
 });
 
 // home > event > event_type > event_name
@@ -55,4 +55,17 @@ Breadcrumbs::for('checkoutTicket', function (BreadcrumbTrail $trail, $event) {
     $trail->push($eventDetail->type, route('event.get.by-type', [$eventDetail->type]));
     $trail->push($eventDetail->title, route('event.detail', [$eventDetail->type, $eventDetail->slug]));
     $trail->push('Checkout');
+});
+
+// home > create event
+Breadcrumbs::for('createEvent', function(BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Create Event', route('event.create'));
+});
+
+// home > create event > Event
+Breadcrumbs::for('createBasicEvent', function(BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Create Event', route('event.create'));
+    $trail->push('Basic', route('event.create.form-basic'));
 });

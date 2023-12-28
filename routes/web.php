@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controller\TicketController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,7 @@ Route::get('/', [HomeController::class, 'getHomePage']);
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+Route::get('/dashboard/{userId}', [UserDashboardController::class, 'getUserDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,16 +32,19 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'getAllEventPage')->name('event.get');
+    Route::get('/events/create/basic', 'getCreateBasicEventPage')->middleware(['auth', 'verified'])->name('event.create.form-basic');
+    Route::get('/events/create', 'createEvent')->middleware(['auth', 'verified'])->name('event.create');
+    Route::post('/events/create/ticket', 'getCreateTicketPage')->name('event.create.ticket');
     Route::get('/events/{eventType}', 'getEventsByTypePage')->name('event.get.by-type');
     Route::get('/events/{eventType}/{eventSlug}', 'getEventDetailPage')->name('event.detail');
-    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->name('ticket.checkout');
-    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle');
-    // Route::post('/events/checkout/{orderId}', 'handleFinalCheckout')->name('ticket.checkout-final-handle');
-    Route::post('/events', 'store');
+    Route::post('/events/{eventType}/{eventSlug}/checkout', 'getTicketCheckoutPage')->middleware(['auth', 'verified'])->name('ticket.checkout');
+    Route::post('/events/checkout/{orderId}', 'handleCheckout')->name('ticket.checkout-handle')->middleware(['auth', 'verified']);
+    Route::get('/events/checkout/{orderId}/success', 'handleSuccessTransaction')->name('event.ticket.checkout-success');
 });
 
 Route::controller(TicketController::class)->group(function () {
     Route::get('/tickets', 'getTicketByEvent')->name('ticket.get');
+    Route::get('/tickets/{eventSlug}', 'createTicketForEvent')->name('ticket.create');
 });
 
 require __DIR__ . '/auth.php';

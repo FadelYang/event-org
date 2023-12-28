@@ -37,6 +37,46 @@
     {{-- javascript --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('javascript')
+    @if (session('success-alert'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "{{ session('success-alert') }}",
+                text: "{{ session('alert-message') }}",
+            });
+        </script>
+    @endif
+    @if (session('error-alert'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "{{ session('error-alert') }}",
+                text: "{{ session('alert-message') }}",
+            });
+        </script>
+    @endif
+    {{-- logout confirmation --}}
+    <script>
+        function logoutConfirmation(event) {
+            event.preventDefault()
+
+            let form = document.getElementById('logoutForm')
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You can login again next time!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, log out!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit()
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

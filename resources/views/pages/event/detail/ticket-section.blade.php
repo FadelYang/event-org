@@ -5,41 +5,28 @@
             <form action="{{ route('ticket.checkout', [$event->type, $event->slug]) }}" method="POST"
                 enctype="multipart/form-data" onsubmit="return handleSelectChange()">
                 @csrf
-                @if (count($eventTickets) > 0)
-                    @for ($i = 0; $i <= $event->total_day; $i++)
-                        <div class="p-10 bg-gray-400 mb-5 rounded">
-                            <p class="hidden" id="eventTotalDay">{{ $event->total_day }}</p>
-                            <p class="ext-md lg:text-lg">Ticket day:
-                                {{ date('D, d M y', strtotime($event->start_date . ' + ' . $i . ' days')) }}</p>
-                            @foreach ($eventTickets as $eventTicket)
-                                <p>{{ $eventTicket->name }}</p>
-                                <p>{{ $eventTicket->type }}</p>
-                                <p>{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}
-                                </p>
 
-                                <div class="hidden">
-                                    <input type="text" name="ticket_id" value="{{ $eventTicket->id }}">
-                                    <input type="text" name="ticket_name" value="{{ $eventTicket->name }}">
-                                    <input type="text" name="ticket_type" value="{{ $eventTicket->type }}">
-                                    <input type="text" name="ticket_price" value="{{ $eventTicket->ticket_price }}">
-                                    <input type="text" name="event_name" value="{{ $event->title }}">
-                                    <input type="text" name="event_date" value="{{ $event->start_date }}">
-                                </div>
+                @foreach ($eventTickets as $eventTicket)
+                    <div class="p-5 bg-gray-400 mb-2 rounded">
+                        <p class="text-xl mb-2"><span
+                                class="font-bold">{{ date('D, d M y', strtotime($eventTicket->date)) }}</span>
+                        </p>
+                        <p>type: <span class="font-bold">{{ $eventTicket->name }}</span></p>
+                        <p>price: <span
+                                class="font-bold">{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}</span>
+                        </p>
 
-                                <label for="day_{{ $i }}_ticket_quantity">Ticket quantity:</label>
-                                <select id="day_{{ $i }}_ticket_quantity" class="rounded"
-                                    name="days[{{$i}}]">
-                                    <option value="">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            @endforeach
-                        </div>
-                    @endfor
-                @else
-                    <p class="ext-md lg:text-lg">Event ini gratis tanpa perlu membeli tiket</p>
-                @endif
+                        <label for="{{ $eventTicket->id }}_{{ $eventTicket->name }}">Ticket
+                            quantity:</label>
+                        <select id="{{ $eventTicket->id }}_{{ $eventTicket->name }}" class="ticket_selected border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            name="ticket_selected[{{ $eventTicket->id }}]">
+                            <option value="">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                @endforeach
 
                 <div class="mt-3">
                     <button type="submit"
@@ -50,7 +37,7 @@
 
         </div>
         <div>
-            
+
         </div>
     </div>
 </div>
@@ -60,11 +47,13 @@
         function handleSelectChange(selectElement) {
             var totalSelected = 0;
 
-            var totalDay = parseInt(document.getElementById("eventTotalDay").innerText);
-            for (var i = 0; i <= totalDay; i++) {
-                var select = document.getElementById("day_" + i + "_ticket_quantity");
-                totalSelected += parseInt(select.value) || 0;
-            }
+            @foreach ($eventTickets as $eventTicket)
+                var select = document.getElementById("{{ $eventTicket->id }}_{{ $eventTicket->name }}");
+
+                if (select) {
+                    totalSelected += parseInt(select.value) || 0;
+                }
+            @endforeach
 
             console.log(totalSelected);
 

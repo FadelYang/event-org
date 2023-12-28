@@ -19,16 +19,19 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->unsignedBigInteger('user_id');
             $table->string('slug')->unique();
+            $table->string('organizer_name');
+            $table->string('PIC_email');
+            $table->string('PIC_phone');
             $table->enum('type', EventTypeEnum::toArray());
             $table->longText('description');
             $table->string('location');
             $table->boolean('is_premium');
+            $table->boolean('is_publish');
+            $table->boolean('is_online');
             $table->string('potrait_banner')->nullable();
             $table->string('landscape_banner')->nullable();
             $table->date('start_date');
             $table->integer('total_day');
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

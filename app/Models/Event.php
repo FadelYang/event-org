@@ -14,21 +14,27 @@ class Event extends Model
     protected $fillable = [
         'title',
         'user_id',
+        'organizer_name',
+        'PIC_email',
+        'PIC_phone',
+        'organizer_name',
         'slug',
         'type',
         'description',
         'location',
         'is_premium',
+        'is_online',
+        'is_publish',
         'potrait_banner',
+        'total_day',
         'landscape_banner',
         'start_date',
-        'end_date',
-        'start_time',
-        'end_time',
+        'end_date'
     ];
 
     protected $attributes = [
-        'is_premium' => false
+        'is_premium' => true,
+        'is_publish' => false
     ];
 
     public function eventCreator(): HasOne

@@ -1,6 +1,6 @@
 <div class="block xl:flex gap-3">
-    <img src="{{ fake()->imageUrl($width = 811, $height = 374) }}" alt=""
-        class="w-full bg-gray-200 max-h-[374px] max-w-[811px] rounded-lg min-h-0 min-w-0  lg:min-h-[374px] lg:min-w-[811px]">
+    <img src="{{ $event->landscape_banner ? asset('images/landscapeBanner/' . $event->landscape_banner) : fake()->imageUrl($width = 811, $height = 374) }}" alt=""
+        class="w-full bg-gray-200 max-h-[374px] max-w-[811px] rounded-lg min-h-0 min-w-0  lg:min-h-[374px] lg:min-w-[811px] object-contain">
     <div
         class="bg-gray-200 px-2 sm:px-4 py-5 w-full max-h-[374px] max-w-[811px] rounded-lg mt-3 xl:mt-0 flex flex-col gap-3">
         <p class="text-2xl lg:text-4xl font-bold mb-2 lg:mb-5">{{ $event->title }}</p>
@@ -17,7 +17,7 @@
         </div>
         <div class="flex gap-3 mb-auto">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-5">
+                xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-5 min-h-[1.25rem] min-w-[1.25rem]">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z">
                 </path>
                 <path stroke-linecap="round" stroke-linejoin="round"
