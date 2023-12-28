@@ -251,7 +251,7 @@ class EventController
 
             return view('pages.event.create.create-ticket', [
                 'event' => $event,
-            ])->with('error-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
+            ])->with('success-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
         }
     }
 }

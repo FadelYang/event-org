@@ -13,13 +13,12 @@ class Ticket extends Model
 
     protected $fillable = [
         'name',
-        'type',
+        'date',
+        'quantity',
+        'is_all_day_pass',
+        'event_id',
         'ticket_price',
         'event_id',
-    ];
-
-    protected $attributes = [
-        'type' => 'regular'
     ];
 
     public function events(): HasMany
