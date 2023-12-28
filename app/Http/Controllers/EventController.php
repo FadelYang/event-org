@@ -42,15 +42,19 @@ class EventController
 
     public function getEventDetailPage($eventType, $eventSlug)
     {
-        $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+        try {
+            $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
 
-        $eventTickets = $this->ticketService->getTicketByEvent($event->id);
+            $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
-        Session::put('event', $event);
+            Session::put('event', $event);
 
-        return view('pages.event.detail.index', compact(
-            ['event', 'eventTickets']
-        ));
+            return view('pages.event.detail.index', compact(
+                ['event', 'eventTickets']
+            ));
+        } catch (\Throwable $th) {
+            return redirect('home')->with('error-alert', 'Opps..')->with('alert-message', "You can not access this page directly");
+        }
     }
 
     public function createEvent()

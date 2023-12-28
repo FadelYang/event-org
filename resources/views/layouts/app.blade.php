@@ -49,7 +49,7 @@
     @if (session('error-alert'))
         <script>
             Swal.fire({
-                icon: "success",
+                icon: "error",
                 title: "{{ session('error-alert') }}",
                 text: "{{ session('alert-message') }}",
             });
