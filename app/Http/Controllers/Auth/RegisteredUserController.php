@@ -51,6 +51,6 @@ class RegisteredUserController extends Controller
             return redirect(RouteServiceProvider::HOME_ADMIN);
         }
 
-        return redirect(RouteServiceProvider::HOME_USER);
+        return redirect(RouteServiceProvider::HOME_USER)->with('success-alert', "Create account Success")->with('alert-message', "Welcome new user");;
     }
 }

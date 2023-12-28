@@ -25,11 +25,15 @@ html {
 }
 
 .opacity-hovering {
-    @apply opacity-80 hover:opacity-100;
+    @apply opacity-100 hover:opacity-90;
 }
 
 .image-card-placeholder {
-    @apply min-w-[324px] min-h-[405px] bg-gray-300
+    @apply min-w-[324px] min-h-[405px] bg-gray-300;
+}
+
+.image-profile-user-placeholder {
+    @apply w-full max-w-[35px] max-h-[35px] min-w-[35px] min-h-[35px] bg-gray-800;
 }
 
 .hero-banner {

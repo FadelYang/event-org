@@ -30,7 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('message', 'heyyyyyyyyyyyyy');
+        $username = Auth::user()->name;
+
+        return redirect()->intended(RouteServiceProvider::HOME)->with('success-alert', "Log in Success")->with('alert-message', "Welcome $username");
     }
 
     /**
@@ -44,6 +46,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success-alert', "Log out success")->with('alert-message', 'You are success log out');
     }
 }
