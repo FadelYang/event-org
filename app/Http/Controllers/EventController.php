@@ -181,13 +181,22 @@ class EventController
         ]);
     }
 
-    public function handleSuccessTransaction($orderId)
+    public function handleSuccessTransaction()
     {
-        $orderId = Session::get('orderId');
-
-        Payment::where('order_id', $orderId)->update(['status' => PaymentStatusEnum::SUCCESS->value]);
-
         return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == 'pending') {
+                $payment = Payment::where('order_id', $request->order_id)->first();
+                $payment->update(['status' => 'success']);
+            }
+        }
     }
 
     public function getCreateBasicEventPage()

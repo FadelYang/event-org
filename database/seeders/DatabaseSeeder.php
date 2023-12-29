@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            UserAdminSeeder::class
+            UserAdminSeeder::class,
+            EventSeeder::class
         ]);
+
+
     }
 }
