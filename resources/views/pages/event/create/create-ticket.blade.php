@@ -60,24 +60,27 @@
         </div>
         <h2 class="text-2xl font-bold mb-2">Input Detail Ticket</h2>
         <div>
-            <form action="{{ route('ticket.create', $event->slug) }}">
+            {{-- <form action="{{ route('ticket.create', $event->slug) }}"> --}}
+            <form action="{{ route('ticket.create') }}" method="POST">
+                @csrf
                 <div class="mb-1">
                     <x-input-label for="ticket_type" :value="__('Jumlah tipe tiket (contoh: 2 untuk regular dan VIP)')" />
                     <x-text-input id="ticket_type" class="block mt-1 w-full" type="number" name="total_ticket_type"
-                        max="5" :value="old('ticket_type')" required autofocus autocomplete="ticket_type" oninput="handleTotalTicketType()"/>
+                        max="5" :value="old('ticket_type')" required autofocus autocomplete="ticket_type"
+                        oninput="handleTotalTicketType()" />
                 </div>
                 <h2 class="text-lg font-bold mb-1">Ticket Detail</h2>
                 <div class="mb-1">
                     <x-input-label :value="__('Apakah Pengguna cukup membeli satu tiket untuk mengakses semua hari?')" />
                     <div>
                         <input type="radio" id="access_checked" class="access_checked" name="access_checked"
-                            value="1" checked oninput="handleTotalTicketType()"/>
+                            value="1" checked oninput="handleTotalTicketType()" />
                         <label for="online">Ya</label>
                     </div>
 
                     <div>
                         <input type="radio" id="access_checked" class="access_checked" name="access_checked"
-                            value="0" oninput="handleTotalTicketType()"/>
+                            value="0" oninput="handleTotalTicketType()" />
                         <label for="offline">Tidak</label>
                     </div>
                 </div>
@@ -109,17 +112,17 @@
                                     <div class="mb-1 flex-auto">
                                     <x-input-label for="date_${i}" :value="__('Date')" />
                                         <x-text-input id="date_${i}" class="block mt-1 w-full" type="date" name="date[]"
-                                            :value="old('date_${i}')" required autofocus autocomplete="date_${i}" min="{{ $event->start_date }}" value="{{ $event->start_date}}"/>
+                                            :value="old('date_${i}')" required autofocus autocomplete="date_${i}" min="{{ $event->start_date }}" value="{{ $event->start_date }}"/>
                                     </div>
                                     <div class="mb-1 flex-auto">
                                         <x-input-label for="ticket_price_${i}" :value="__('Harga Ticket')" />
                                         <x-text-input id="ticket_price_${i}" class="block mt-1 w-full" type="number" name="ticket_price[]"
-                                            :value="old('ticket_price_${i}')" required autofocus autocomplete="ticket_price_${i}" />
+                                            :value="old('ticket_price_${i}')" required autofocus autocomplete="ticket_price_${i}" min="0" />
                                     </div>
                                     <div class="mb-1 flex-auto">
                                         <x-input-label for="quantity_${i}" :value="__('Jumlah tiket yang dijual')" />
                                         <x-text-input id="quantity_${i}" class="block mt-1 w-full" type="number" name="quantity[]"
-                                            :value="old('quantity_${i}')" required autofocus autocomplete="quantity_${i}" />
+                                            :value="old('quantity_${i}')" required autofocus autocomplete="quantity_${i}" min="1"/>
                                     </div>
                                 </div>
                             </div>

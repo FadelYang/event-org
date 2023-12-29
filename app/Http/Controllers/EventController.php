@@ -244,7 +244,6 @@ class EventController
 
             return view('pages.event.create.create-ticket', [
                 'event' => $event,
-                'eventSlug' => $eventSlug
             ]);
         } catch (\Throwable $th) {
             $event = $this->eventService->getLatestCreatedEventByUser($userId);
