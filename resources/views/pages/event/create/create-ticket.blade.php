@@ -100,7 +100,7 @@
                 let value = `
                             <div class="bg-gray-200 p-5 mb-3 rounded-lg">
                                 <p class="text-xl font-bold mb-2">Ticket Type ${i}</p>
-                                <div class="flex gap-1">
+                                <div class="block md:flex gap-1">
                                     <div class="mb-1 flex-auto">
                                         <x-input-label for="name_${i}" :value="__('Nama Tiket')" />
                                         <x-text-input id="name_${i}" class="block mt-1 w-full" type="text" name="name[]"
