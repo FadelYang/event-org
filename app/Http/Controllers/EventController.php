@@ -94,6 +94,7 @@ class EventController
                 $totalPrice = $totalPrice + (intval($ticket->ticket_price) * $totalSelectedTickets);
 
                 $ticketData = [
+                    'ticketId' => $ticket->id,
                     'ticketName' => $ticket->name,
                     'ticketPrice' => $ticket->ticket_price,
                     'ticketDate' => $ticket->date,
