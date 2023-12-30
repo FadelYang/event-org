@@ -18,26 +18,17 @@
                     Your purchase history
                 </div>
                 {{-- table --}}
-                <div class="px-6">
+                <div class="p-6">
                     @include('profile.purchase-ticket-history-table')
                 </div>
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-1">
-                <div class="p-6 text-gray-900 text-xl font-bold">
+                <div class="px-6 mt-6 text-gray-900 text-xl font-bold">
                     Your Event
                 </div>
                 <div class="p-6">
-                    @if (count($createEventHistories) != 0)
-                        @foreach ($createEventHistories as $item)
-                            {{ $item->id }}
-                            {{ $item->title }}
-                            {{ $item->status }}
-                            <br>
-                        @endforeach
-                    @else
-                        <p class="mt-6">You don't have any create event history</p>
-                    @endif
+                    @include('profile.create-event-history-table')
                 </div>
             </div>
         </div>
@@ -45,12 +36,23 @@
 
     @push('javascript')
         <script>
-            let table = new DataTable('#paymentHistoryTable', {
+            let paymentHistoryTable = new DataTable('#paymentHistoryTable', {
                 "pageLength": 10,
                 "dom": 'frtip',
                 "order": [0, 'desc'],
                 "initComplete": function(settings, json) {
-                    $("#paymentHistoryTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                    $("#paymentHistoryTable").wrap(
+                        "<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+
+            let createEventHistoryTable = new DataTable('#createEventHistoryTable', {
+                "pageLength": 10,
+                "dom": 'frtip',
+                "order": [0, 'desc'],
+                "initComplete": function(settings, json) {
+                    $("#createEventHistoryTable").wrap(
+                        "<div style='overflow:auto; width:100%;position:relative;'></div>");
                 },
             });
         </script>

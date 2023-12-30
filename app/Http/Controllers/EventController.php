@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\payment;
-use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -193,7 +192,7 @@ class EventController
         $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
         if($hashed == $request->signature_key) {
-            if ($request->transaction_status == 'capture' || $request->transaction_status == 'pending') {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == PaymentStatusEnum::PENDING->value) {
                 $payment = Payment::where('order_id', $request->order_id)->first();
                 $payment->update(['status' => 'success']);
             }

@@ -1,14 +1,15 @@
 @if (count($paymentHistories) != 0)
-    <table id="paymentHistoryTable" class="display">
+    <table id="paymentHistoryTable" class="display w-full">
         <thead class="">
             <tr>
                 <th class="hidden">Id</th>
-                <th>Order ID</th>
+                <th class="w-[12%]">Order ID</th>
                 <th>Event Name</th>
-                <th>Total Ticket Price</th>
-                <th>Status</th>
-                <th>Checkout Date</th>
-                <th>invoice</th>
+                <th class="w-[15%]">Total Ticket Price</th>
+                <th class="w-[12%]">Status</th>
+                <th class="w-[15%]">Checkout Date</th>
+                <th class="w-[15%] lg-w-[12%]">invoice</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +18,7 @@
                     <td class="hidden">{{ $item->id }}</td>
                     <td>{{ $item->order_id }}</td>
                     <td>{{ $item->event_name }}</td>
-                    <td>{{ $item->total_price }}</td>
+                    <td>{{ 'Rp. ' . number_format($item->total_price, 2, ',', '.') }}</td>
                     @if ($item->status == 'success')
                         <td><span class="p-1 text-sm bg-green-500 rounded-xl border-2 border-g">{{ $item->status }}</span></td>
                         <td>{{ date('D, d M y', strtotime($item->created_at)) }}</td>
@@ -34,6 +35,7 @@
                         </td>
                     @endif
                     {{-- must have updated_at column in database --}}
+                    <td><a href="#">action</a></td>
 
                 </tr>
             @endforeach

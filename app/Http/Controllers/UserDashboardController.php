@@ -20,7 +20,7 @@ class UserDashboardController extends Controller
     {
         $paymentHistories = $this->paymentService->getUserPaymentHistory($userId);
         $createEventHistories = $this->eventService->getEventByUserId($userId);
-        $detailPurchasedItem = [];
+        // dd($createEventHistories->all());
 
         return view('dashboard', [
             'paymentHistories' => $paymentHistories,
