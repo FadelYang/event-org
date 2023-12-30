@@ -19,7 +19,7 @@
                 </div>
                 {{-- table --}}
                 <div class="px-6">
-                    @include("profile.purchase-ticket-history-table")
+                    @include('profile.purchase-ticket-history-table')
                 </div>
             </div>
 
@@ -48,7 +48,10 @@
             let table = new DataTable('#paymentHistoryTable', {
                 "pageLength": 10,
                 "dom": 'frtip',
-                "order": [ 0, 'desc' ]
+                "order": [0, 'desc'],
+                "initComplete": function(settings, json) {
+                    $("#paymentHistoryTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
             });
         </script>
     @endpush
