@@ -14,25 +14,12 @@
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-1">
-                <div class="p-6 text-gray-900 text-xl font-bold">
+                <div class="px-6 mt-6 text-gray-900 text-xl font-bold">
                     Your purchase history
                 </div>
                 {{-- table --}}
-                <div class="p-6">
-                    @if (count($paymentHistories) != 0)
-                        @foreach ($paymentHistories as $item)
-                            {{ $item->id }}
-                            {{ $item->customer_name }}
-                            {{ $item->ticket_id }}
-                            {{ $item->total_price }}
-                            {{ $item->status }}
-                            <a href="/">Invoice</a>
-                            <br>
-                        @endforeach
-                    @else
-                        <p class="mt-6">You don't have any purchase history</p>
-                    @endif
-
+                <div class="px-6">
+                    @include("profile.purchase-ticket-history-table")
                 </div>
             </div>
 
@@ -55,4 +42,14 @@
             </div>
         </div>
     </div>
+
+    @push('javascript')
+        <script>
+            let table = new DataTable('#paymentHistoryTable', {
+                "pageLength": 10,
+                "dom": 'frtip',
+                "order": [ 0, 'desc' ]
+            });
+        </script>
+    @endpush
 </x-app-layout>
