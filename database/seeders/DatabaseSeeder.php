@@ -22,6 +22,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        
+        $this->call([
+            UserAdminSeeder::class
+        ]);
 
         User::factory()
             ->count(8)
