@@ -32,7 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         $username = Auth::user()->name;
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('success-alert', "Log in Success")->with('alert-message', "Welcome $username");
+        if (Auth::user()->role == UserRoleEnum::ADMIN) {
+            return redirect()->intended(RouteServiceProvider::HOME_ADMIN)->with('success-alert', "Log in Success")->with('alert-message', "Welcome $username");
+        } else {
+            return redirect()->intended(RouteServiceProvider::HOME)->with('success-alert', "Log in Success")->with('alert-message', "Welcome $username");
+        }
     }
 
     /**
