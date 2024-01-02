@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Event;
+use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,9 +22,18 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        
         $this->call([
             UserAdminSeeder::class
         ]);
+
+        User::factory()
+            ->count(8)
+            ->has(
+                Event::factory()
+                    ->count(3)
+                    ->has(Ticket::factory()->count(2))
+            )
+            ->create(['role' => 'regular']);
     }
 }

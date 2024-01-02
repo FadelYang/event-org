@@ -15,8 +15,13 @@ class TicketRepository
 
     public function getTicketById($ticketId)
     {
-        $ticket =Ticket::find($ticketId);
+        $ticket = Ticket::find($ticketId);
 
         return $ticket;
+    }
+
+    public function createTicketForEvent($requestData)
+    {
+        return Ticket::create($requestData);
     }
 }

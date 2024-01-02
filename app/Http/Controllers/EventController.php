@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\payment;
-use App\Models\Ticket;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -42,15 +41,19 @@ class EventController
 
     public function getEventDetailPage($eventType, $eventSlug)
     {
-        $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+        try {
+            $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
 
-        $eventTickets = $this->ticketService->getTicketByEvent($event->id);
+            $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
-        Session::put('event', $event);
+            Session::put('event', $event);
 
-        return view('pages.event.detail.index', compact(
-            ['event', 'eventTickets']
-        ));
+            return view('pages.event.detail.index', compact(
+                ['event', 'eventTickets']
+            ));
+        } catch (\Throwable $th) {
+            return redirect('home')->with('error-alert', 'Opps..')->with('alert-message', "You can not access this page directly");
+        }
     }
 
     public function createEvent()
@@ -90,6 +93,7 @@ class EventController
                 $totalPrice = $totalPrice + (intval($ticket->ticket_price) * $totalSelectedTickets);
 
                 $ticketData = [
+                    'ticketId' => $ticket->id,
                     'ticketName' => $ticket->name,
                     'ticketPrice' => $ticket->ticket_price,
                     'ticketDate' => $ticket->date,
@@ -177,13 +181,22 @@ class EventController
         ]);
     }
 
-    public function handleSuccessTransaction($orderId)
+    public function handleSuccessTransaction()
     {
-        $orderId = Session::get('orderId');
-
-        Payment::where('order_id', $orderId)->update(['status' => PaymentStatusEnum::SUCCESS->value]);
-
         return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == PaymentStatusEnum::PENDING->value) {
+                $payment = Payment::where('order_id', $request->order_id)->first();
+                $payment->update(['status' => 'success']);
+            }
+        }
     }
 
     public function getCreateBasicEventPage()
@@ -240,14 +253,13 @@ class EventController
 
             return view('pages.event.create.create-ticket', [
                 'event' => $event,
-                'eventSlug' => $eventSlug
             ]);
         } catch (\Throwable $th) {
             $event = $this->eventService->getLatestCreatedEventByUser($userId);
 
             return view('pages.event.create.create-ticket', [
                 'event' => $event,
-            ])->with('error-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
+            ])->with('success-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
         }
     }
 }

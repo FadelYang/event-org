@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enum\EventTypeEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -26,7 +27,7 @@ class EventFactory extends Factory
             'organizer_name' => $title,
             'PIC_email' => fake()->email(),
             'PIC_phone' => fake()->phoneNumber(),
-            'user_id' => '1',
+            'user_id' => User::factory(),
             // 'organizer' => $title,
             'description' => fake()->paragraph(),
             'slug' => $titleSlug,

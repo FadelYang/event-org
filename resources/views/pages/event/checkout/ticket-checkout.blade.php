@@ -7,13 +7,17 @@
         @foreach ($allSelectedTickets as $SelectedTicket)
             <div class="items-center justify-center px-5 py-2 lg:p-5 rounded-xl bg-gray-200 mb-2">
                 <p>type: <span class="font-bold">{{ $SelectedTicket['ticketName'] }}</span></p>
-                <p>price: <span class="font-bold">{{ $SelectedTicket['ticketPrice'] == null ? 'Gratis' : 'Rp. ' . number_format($SelectedTicket['ticketPrice'], 2, ',', '.') }}</span></p>
+                <p>price: <span
+                        class="font-bold">{{ $SelectedTicket['ticketPrice'] == null ? 'Gratis' : 'Rp. ' . number_format($SelectedTicket['ticketPrice'], 2, ',', '.') }}</span>
+                </p>
                 <p>Total: <span class="font-bold">{{ $SelectedTicket['totalSelectedTickets'] }}</span></p>
-                <p>Date: <span class="font-bold">{{ date('D, d M y', strtotime($SelectedTicket['ticketDate'])) }}</span></p>
+                <p>Date: <span class="font-bold">{{ date('D, d M y', strtotime($SelectedTicket['ticketDate'])) }}</span>
+                </p>
             </div>
         @endforeach
         <div>
-            <p class="text-lg">Total price: <span class="font-bold">{{ 'Rp. ' . number_format($totalPrice, 2, ',', '.') }}</span></p>
+            <p class="text-lg">Total price: <span
+                    class="font-bold">{{ 'Rp. ' . number_format($totalPrice, 2, ',', '.') }}</span></p>
         </div>
 
         <div class="mt-5">
@@ -23,6 +27,10 @@
             <form action="{{ route('ticket.checkout-handle', $orderId) }}" method="post">
                 @csrf
                 <div>
+                    <div class="hidden">
+                        <input type="text" name="event_name" value="{{ $event['title'] }}">
+                        <input type="text" name="event_id" value="{{ $event['id'] }}">
+                    </div>
                     <x-input-label for="customer_name" :value="__('Name')" />
                     <x-text-input id="customer_name" class="block mt-1 w-full" type="text" name="customer_name"
                         :value="old('customer_name')" required autofocus autocomplete="username" />

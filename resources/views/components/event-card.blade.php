@@ -1,4 +1,5 @@
 <div class="event-card bg-gray-200 max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
+    {{-- {{dd()}} --}}
     <a href="{{ route('event.detail', [$item->type, $item->slug]) }}">
         <img src="{{ asset('images/potraitBanner/' . $item->potrait_banner) }}" alt=""
             class="w-full rounded-t-xl max-w-[324px] max-h-[405px] opacity-hovering image-card-placeholder object-cover">
@@ -12,11 +13,15 @@
         <div class="mt-1">
             <p class="text-lg text-gray-500">{{ date('D, d M y', strtotime($item->start_date)) }}</p>
             <p class="mt-3 font-bold text-lg">
-                {{ $item->is_free == null ? 'Gratis' : 'Berbayar' }}</p>
+                @if ($item->tickets->first() != null)
+                {{ $item->tickets->first()->ticket_price == 0 ? 'Gratis' : 'Rp. ' . number_format($item->tickets->first()->ticket_price, 2, ',', '.') }}</p>
+                @else
+                <p class="mt-3 font-bold text-lg">Tidak ada info penjualan tiket</p>
+                @endif
         </div>
         <div class="event-organizer flex items-center gap-3 mt-1 py-2 border-t-2 border-gray-500">
             <img src="" alt="" class="rounded-full image-profile-user-placeholder">
-            <p class="text-lg">{{ $item->eventCreator->name }}</p>
+            <p class="text-lg max-w-[240px]">{{ $item->organizer_name }}</p>
         </div>
     </div>
 </div>

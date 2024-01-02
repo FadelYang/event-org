@@ -5,7 +5,7 @@
              Promosikan Eventmu Sendiri</h1>
          <div class="block sm:flex gap-3 mt-5 items-start justify-center lg:justify-start">
              <div>
-                 <a class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200">Buat Event</a>
+                 <a class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200" href="{{ route('event.create') }}">Buat Event</a>
 
              </div>
              <div class="mt-5 sm:mt-0">

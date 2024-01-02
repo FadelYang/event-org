@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('snap_token')->nullable();
             $table->enum('status', PaymentStatusEnum::toArray());
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('event_id');
+            $table->string('event_name');
             // item detail will container key value item of order detail like ticket quantity and ticket
             $table->json('item_detail');
             $table->json('customer_detail');
@@ -28,6 +30,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 
