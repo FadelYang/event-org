@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Enum\EventTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('PIC_email');
             $table->string('PIC_phone');
             $table->enum('type', EventTypeEnum::toArray());
+            $table->enum('status', EventCuratedStatusEnum::toArray());
             $table->longText('description');
             $table->string('location');
             $table->boolean('is_premium');

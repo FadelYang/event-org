@@ -20,6 +20,7 @@ class Event extends Model
         'organizer_name',
         'slug',
         'type',
+        'status',
         'description',
         'location',
         'is_premium',

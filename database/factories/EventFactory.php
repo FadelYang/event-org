@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Enum\EventTypeEnum;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -32,6 +34,7 @@ class EventFactory extends Factory
             'description' => fake()->paragraph(),
             'slug' => $titleSlug,
             'type' => fake()->randomElement(EventTypeEnum::toArray()),
+            'status' => fake()->randomElement(EventCuratedStatusEnum::toArray()),
             'location' => fake()->city(),
             'is_premium' => fake()->boolean(),
             'is_publish' => fake()->boolean(),
@@ -41,5 +44,15 @@ class EventFactory extends Factory
             'start_date' => fake()->date(),
             'total_day' => 3,
         ];
+    }
+
+    public function statusAndIsPublishTrue()
+    {
+        return $this->state(function () {
+            return [
+                'status' => EventCuratedStatusEnum::APPROVED,
+                'is_publish' => true,
+            ];
+        });
     }
 }
