@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'getHomePage']);
+Route::get('/', [HomeController::class, 'getHomePage'])->name('main-page');
 
 Route::controller(AdminDashboardController::class)->group(function () {
-    Route::get('/dashboard', 'index')->name('admin.home');
+    Route::get('/dashboard', 'index')->middleware(['auth', 'verified', 'admin'])->name('admin.home');
 });
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');

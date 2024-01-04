@@ -22,7 +22,7 @@ class IsAdmin
             return $next($request);
         }
 
-        return redirect('home')->with('error', 'You can access this page');
+        return redirect('home')->with('error-alert', 'oops')->with('alert-message', 'You are not allowed to acces this page');
 
     }
 }
