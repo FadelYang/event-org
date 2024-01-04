@@ -41,7 +41,7 @@ class EventFactory extends Factory
             'is_online' => fake()->boolean(),
             'potrait_banner' => null,
             'landscape_banner' => null,
-            'start_date' => fake()->date(),
+            'start_date' => fake()->dateTimeBetween(date('Y-m-d'), '+2 weeks'),
             'total_day' => 3,
         ];
     }
