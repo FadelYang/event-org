@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Repositories\EventRepository;
 
 class EventService
@@ -16,6 +17,11 @@ class EventService
     public function getAllEvent()
     {
         return $this->eventRepository->getAllEvent();
+    }
+
+    public function getApprovedAndPublishEvent($event)
+    {
+        return $event->where('is_publish', 1)->where('status', EventCuratedStatusEnum::APPROVED->value);
     }
 
     public function getEventById($eventId)

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\EventCuratedStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,7 +36,8 @@ class Event extends Model
 
     protected $attributes = [
         'is_premium' => true,
-        'is_publish' => false
+        'is_publish' => false,
+        'status' => EventCuratedStatusEnum::PENDING->value
     ];
 
     public function eventCreator(): BelongsTo
