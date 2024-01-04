@@ -1,4 +1,4 @@
-<div class="event-card bg-gray-200 max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
+<div class="event-card bg-white max-w-sm md:max-w-xs rounded-xl min-w-max snap-center">
     {{-- {{dd()}} --}}
     <a href="{{ route('event.detail', [$item->type, $item->slug]) }}">
         <img src="{{ $item->potrait_banner ? asset('images/potraitBanner/' . $item->potrait_banner) : asset('images/potraitBanner/default-potrait-poster.jpg')  }}" alt=""
