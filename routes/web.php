@@ -23,14 +23,6 @@ Route::get('/', [HomeController::class, 'getHomePage']);
 
 Route::controller(AdminDashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')->name('admin.home');
-    Route::get('/dashboard/forms', 'forms')->name('admin.forms');
-    Route::get('/dashboard/cards', 'forms')->name('admin.cards');
-    Route::get('/dashboard/charts', 'forms')->name('admin.charts');
-    Route::get('/dashboard/buttons', 'forms')->name('admin.buttons');
-    Route::get('/dashboard/modals', 'forms')->name('admin.modals');
-    Route::get('/dashboard/tables', 'forms')->name('admin.tables');
-    Route::get('/dashboard/404', 'forms')->name('admin.page.404');
-    Route::get('/dashboard/blanks', 'forms')->name('admin.page.blank');
 });
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');

@@ -28,13 +28,16 @@ class AdminDashboardController extends Controller
 
         $users = $this->userService->getAllUser();
 
-        $publishEvents = $events->where('status', EventCuratedStatusEnum::APPROVED->value);
+        $approveCuratedEvents = $events->where('status', EventCuratedStatusEnum::APPROVED->value);
 
-        $unPublishEvents = $events->where('status', EventCuratedStatusEnum::PENDING->value);
+        $pendingCuratedEvents = $events->where('status', EventCuratedStatusEnum::PENDING->value);
+
+        $publishEvents = $approveCuratedEvents->where('is_publish', true);
 
         return view('admin.index', [
+            'approveCuratedEvents' => $approveCuratedEvents,
+            'pendingCuratedEvents' => $pendingCuratedEvents,
             'publishEvents' => $publishEvents,
-            'unPublishEvents' => $unPublishEvents,
             'tickets' => $tickets,
             'users' => $users,
             'events' => $events,
