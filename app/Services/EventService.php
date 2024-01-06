@@ -87,4 +87,14 @@ class EventService
     {
         return $this->eventRepository->getLatestCreatedEventByUser($userId);
     }
+
+    public function approveEvent($eventId)
+    {
+        return $this->eventRepository->approveEvent($eventId);
+    }
+
+    public function publishEvent($eventId)
+    {
+        return $this->eventRepository->publishEvent($eventId);
+    }
 }

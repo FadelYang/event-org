@@ -14,7 +14,7 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             Detaill Event
         </h2>
-        <div class="grid md:grid-cols-2 xl:grid-cols-4 mb-4">
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 mb-2">
             <div>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Potrait Poster</p>
                 @if ($event->potrait_banner)
@@ -27,56 +27,50 @@
             <div>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Landscape Poster</p>
                 @if ($event->landscape_banner)
-                    <img src="{{ asset('images/landscapeBanner/' . $event->landscape_banner) }}" alt=""
-                        class="w-full">
+                    <img src="{{ asset('images/landscapeBanner/' . $event->landscape_banner) }}" alt="" id="event-landscape-poster"
+                        class="">
                 @else
                     <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">poster tidak ditemukan</p>
                 @endif
             </div>
-            <div class="hidden">
-                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Potrait Poster</p>
-            </div>
-            <div class="hidden">
-                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Landscape Poster</p>
-            </div>
         </div>
-        <div class="grid md:grid-cols-2 xl:grid-cols-4">
-            <div class="mb-4">
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Name</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->title }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Organizer</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->organizer_name }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">PIC Email</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->PIC_email }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">PIC Phone</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->PIC_phone }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Tipe Event</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->type }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Start Date</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">
                     {{ date('D, d M y', strtotime($event->start_date)) }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">End Date</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">
                     {{ date('D, d M y', strtotime($event->start_date . ' + ' . $event->total_day . ' days')) }}</p>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Location</p>
                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">{{ $event->location }}</p>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Status</p>
                 @if ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value)
                     <p><span
@@ -94,7 +88,7 @@
                 @endif
             </div>
 
-            <div class="mb-4">
+            <div class="mb-2">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Is Publish</p>
                 @if ($event->is_publish == 1)
                     <p><span
@@ -108,16 +102,37 @@
                 @endif
             </div>
         </div>
-        <div class="grid grid-cols-1">
-
-            <div class="mb-4">
+        <div class="grid grid-cols-1 mb-4">
+            <div class="">
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">Description</p>
-                <p class="text-lg text-gray-500 dark:text-gray-400 mb-2 whitespace-pre-line event-description-text">
+                <p class="text-lg text-gray-500 dark:text-gray-400 event-description-text">
                     {{ $event->description }}</p>
             </div>
         </div>
-        <div class="mb-4">
-            <form action="#" id="curating-form" onclick="eventCuratedConfirmation(event)">
+        <h2 class="my-6 dtext-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Detaill Event Ticket
+        </h2>
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-2">
+            @foreach ($eventTickets as $eventTicket)
+                <div class="mb-2">
+                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"><span
+                            class="font-bold">{{ date('D, d M y', strtotime($eventTicket->date)) }}</span>
+                    </p>
+                    <p class="text-lg text-gray-500 dark:text-gray-400">Name: <span
+                            class="font-bold">{{ $eventTicket->name }}</span></p>
+                    <p class="text-lg text-gray-500 dark:text-gray-400">price: <span
+                            class="font-bold">{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}</span>
+                    </p>
+                    <p class="text-lg text-gray-500 dark:text-gray-400">Quantity: <span
+                            class="font-bold">{{ $eventTicket->quantity }}</span></p>
+                </div>
+            @endforeach
+        </div>
+        <div class="mb-2">
+            <form action="{{ route('admin.approve-and-publish-event', $event->id) }}" id="curating-form" onclick="eventCuratedConfirmation(event)" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
                 <button type="submit"
                     class="mb-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                     Terbitkan Event
@@ -130,66 +145,70 @@
                 </button>
             </form>
         </div>
-    </div>
 
-    @include('admin.pages.event.cancel-statement-modal')
-@endsection
+        @include('admin.pages.event.cancel-statement-modal')
+    @endsection
 
-@push('javascript')
-    <script>
-        function eventCuratedConfirmation(event) {
-            event.preventDefault()
+    @push('javascript')
+        <script>
+            function eventCuratedConfirmation(event) {
+                event.preventDefault()
 
-            let form = document.getElementById('curating-form')
+                let form = document.getElementById('curating-form')
 
-            Swal.fire({
-                title: "Apakah kamu yakin?",
-                text: "Event ini akan diterbitkan dan muncul di halaman depan!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, terbitkan!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit()
-                }
-            })
-        }
+                Swal.fire({
+                    title: "Apakah kamu yakin?",
+                    text: "Event ini akan diterbitkan dan muncul di halaman depan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, terbitkan!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit()
+                    }
+                })
+            }
 
-        function cancelEventCuratedConfirmation(event) {
-            event.preventDefault()
+            function cancelEventCuratedConfirmation(event) {
+                event.preventDefault()
 
-            let form = document.getElementById('cancel-curating-form')
+                let form = document.getElementById('cancel-curating-form')
 
-            Swal.fire({
-                title: "Apakah kamu yakin?",
-                text: "Pengguna akan mendapat pemberitahuan mengenai penolakan pendaftaran event!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, Tolak!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Masukkan alasan penolakan",
-                        input: "text",
-                        inputAttributes: {
-                            autocapitalize: "off"
-                        },
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        showCancelButton: true,
-                        confirmButtonText: "Ya, Tolak",
-                        showLoaderOnConfirm: true,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit()
-                        }
-                    });
-                }
-            })
-        }
-    </script>
-@endpush
+                Swal.fire({
+                    title: "Apakah kamu yakin?",
+                    text: "Pengguna akan mendapat pemberitahuan mengenai penolakan pendaftaran event!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, Tolak!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Masukkan alasan penolakan",
+                            input: "text",
+                            inputValidator: (value) => {
+                                if (!value) {
+                                    return "Alasan penolakan wajib diisi!";
+                                }
+                            },
+                            inputAttributes: {
+                                autocapitalize: "off"
+                            },
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            showCancelButton: true,
+                            confirmButtonText: "Ya, Tolak",
+                            showLoaderOnConfirm: true,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit()
+                            }
+                        });
+                    }
+                })
+            }
+        </script>
+    @endpush

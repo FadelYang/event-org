@@ -56,4 +56,20 @@ class AdminDashboardController extends Controller
             'eventTickets' => $eventTickets,
         ]);
     }
+
+    public function approveAndPublishEvent($eventId)
+    {
+        $event = $this->eventService->getEventById($eventId);
+
+        try {
+            $this->eventService->approveEvent($event->id);
+            $this->eventService->publishEvent($event->id);
+
+            return back()->with('success-alert', 'Update Event Success')->with('alert-message', 'sukses mengkruasi dan menayangkan event');
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+            return back()->with('error-alert', 'Update Event Fail')->with('alert-message', 'gagal mengkurasi dan menayangkan event');
+        }
+    }
 }

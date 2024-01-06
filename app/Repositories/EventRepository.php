@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Enum\EventTypeEnum;
 use App\Models\Event;
 
@@ -81,5 +82,19 @@ class EventRepository
     public function getLatestCreatedEventByUser($userId)
     {
         return Event::where('user_id', $userId)->orderBy('id', 'desc')->first();
+    }
+
+    public function approveEvent($eventId)
+    {
+        return $this->getEventById($eventId)->update([
+            'status' => EventCuratedStatusEnum::APPROVED->value
+        ]);
+    }
+
+    public function publishEvent($eventId)
+    {
+        return $this->getEventById($eventId)->update([
+            'is_publish' => '1'
+        ]);
     }
 }
