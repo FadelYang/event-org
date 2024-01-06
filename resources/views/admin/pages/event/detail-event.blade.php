@@ -27,8 +27,8 @@
             <div>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Event Landscape Poster</p>
                 @if ($event->landscape_banner)
-                    <img src="{{ asset('images/landscapeBanner/' . $event->landscape_banner) }}" alt="" id="event-landscape-poster"
-                        class="">
+                    <img src="{{ asset('images/landscapeBanner/' . $event->landscape_banner) }}" alt=""
+                        id="event-landscape-poster" class="">
                 @else
                     <p class="text-lg text-gray-500 dark:text-gray-400 mb-2">poster tidak ditemukan</p>
                 @endif
@@ -119,32 +119,29 @@
                             class="font-bold">{{ date('D, d M y', strtotime($eventTicket->date)) }}</span>
                     </p>
                     <p class="text-lg text-gray-500 dark:text-gray-400">Name: <span
-                            class="font-bold">{{ $eventTicket->name }}</span></p>
+                            class="">{{ $eventTicket->name }}</span></p>
                     <p class="text-lg text-gray-500 dark:text-gray-400">price: <span
-                            class="font-bold">{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}</span>
+                            class="">{{ $eventTicket->ticket_price == null ? 'Gratis' : 'Rp. ' . number_format($eventTicket->ticket_price, 2, ',', '.') }}</span>
                     </p>
                     <p class="text-lg text-gray-500 dark:text-gray-400">Quantity: <span
-                            class="font-bold">{{ $eventTicket->quantity }}</span></p>
+                            class="">{{ $eventTicket->quantity }}</span></p>
                 </div>
             @endforeach
         </div>
-        <div class="mb-2 {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'opacity-50' : '' }}">
-            <form action="{{ route('admin.approve-and-publish-event', $event->id) }}" id="curating-form" onclick="eventCuratedConfirmation(event)" method="POST" enctype="multipart/form-data">
+        <div class="mb-2">
+            <form action="{{ route('admin.approve-and-publish-event', $event->id) }}" id="curating-form"
+                onclick="eventCuratedConfirmation(event)" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                <button
-                    type="submit"
-                    class="mb-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                    {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'disabled' : '' }}>
+                <button type="submit" id="curating-form-button"
+                    class="mb-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                     Terbitkan Event
                 </button>
             </form>
             <form action="#" id="cancel-curating-form" onclick="cancelEventCuratedConfirmation(event)">
-                <button 
-                    type="submit"
-                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-500 hover:bg-red-500 focus:outline-none focus:shadow-outline-purple"
-                    {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'disabled' : '' }}>
+                <button type="submit"
+                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-500 hover:bg-red-500 focus:outline-none focus:shadow-outline-purple">
                     Cancel Event
                 </button>
             </form>
@@ -158,22 +155,33 @@
             function eventCuratedConfirmation(event) {
                 event.preventDefault()
 
-                let form = document.getElementById('curating-form')
+                let form = document.getElementById('curating-form');
+                let isEventApproved = {{ $event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value ? 'true' : 'false' }};
 
-                Swal.fire({
-                    title: "Apakah kamu yakin?",
-                    text: "Event ini akan diterbitkan dan muncul di halaman depan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya, terbitkan!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit()
-                    }
-                })
+                if (isEventApproved) {
+                    Swal.fire({
+                        title: "Event sudah dikurasi",
+                        text: "event ini sudah dikurasi dan sudah terbit",
+                        icon: "info"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Apakah kamu yakin?",
+                        text: "Event ini akan diterbitkan dan muncul di halaman depan!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, terbitkan!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit the form only if the user confirms
+                            form.submit();
+                        }
+                    });
+                }
             }
+
 
             function cancelEventCuratedConfirmation(event) {
                 event.preventDefault()
