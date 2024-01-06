@@ -128,19 +128,23 @@
                 </div>
             @endforeach
         </div>
-        <div class="mb-2">
+        <div class="mb-2 {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'opacity-50' : '' }}">
             <form action="{{ route('admin.approve-and-publish-event', $event->id) }}" id="curating-form" onclick="eventCuratedConfirmation(event)" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                <button type="submit"
-                    class="mb-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <button
+                    type="submit"
+                    class="mb-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'disabled' : '' }}>
                     Terbitkan Event
                 </button>
             </form>
             <form action="#" id="cancel-curating-form" onclick="cancelEventCuratedConfirmation(event)">
-                <button type="submit"
-                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <button 
+                    type="submit"
+                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-500 hover:bg-red-500 focus:outline-none focus:shadow-outline-purple"
+                    {{ ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value) ? 'disabled' : '' }}>
                     Cancel Event
                 </button>
             </form>
