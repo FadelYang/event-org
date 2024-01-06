@@ -23,6 +23,7 @@ Route::get('/', [HomeController::class, 'getHomePage'])->name('main-page');
 
 Route::controller(AdminDashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')->middleware(['auth', 'verified', 'admin'])->name('admin.home');
+    Route::get('/dashboard/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.event.detail');
 });
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');

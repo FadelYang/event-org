@@ -14,7 +14,8 @@ class AdminDashboardController extends Controller
     protected $ticketService;
     protected $userService;
 
-    public function __construct(EventService $eventService, TicketService $ticketService, UserService $userService) {
+    public function __construct(EventService $eventService, TicketService $ticketService, UserService $userService)
+    {
         $this->eventService = $eventService;
         $this->ticketService = $ticketService;
         $this->userService = $userService;
@@ -44,13 +45,15 @@ class AdminDashboardController extends Controller
         ]);
     }
 
-    public function forms()
+    public function getDetailSubmittedEvent($eventType, $eventSlug)
     {
-        return view('admin.index');
-    }
+        $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
 
-    public function cards()
-    {
-        return view('admin.index');
+        $eventTickets = $this->ticketService->getTicketByEvent($event->id);
+
+        return view('admin.pages.event.detail-event', [
+            'event' => $event,
+            'eventTickets' => $eventTickets,
+        ]);
     }
 }

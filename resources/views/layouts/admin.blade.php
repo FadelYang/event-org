@@ -4,10 +4,16 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Evenin | Admin Dashboard</title>
+    <style>
+        .event-description-text {
+            white-space: pre-line;
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="{{asset('css/tailwind.output.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('css/Chart.min.css') }}"/>
+    
+    {{-- <link rel="stylesheet" href="{{ asset('css/Chart.min.css') }}"/> --}}
 </head>
 <body>
 <div
