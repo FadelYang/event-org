@@ -31,10 +31,10 @@ Route::controller(AdminDashboardController::class)->group(function () {
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');
 
 Route::controller(UserDashboardController::class)->group(function () {
-    Route::get('/dashboard/user/{userId}', 'getUserDashboard')->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/dashboard/user/{userSlug}/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.detail');
-    Route::get('/dashboard/user/{userSlug}/events/update/{eventType}/{eventSlug}', 'getUpdatedSubmittedEventPage')->middleware(['auth', 'verified'])->name('user.event.detail.update');
-    Route::put('/dashboard/user/events/{eventId}', 'updateSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.update');
+    Route::get('/dashboard/user/{userId}', 'getUserDashboard')->middleware(['auth', 'verified', 'OnlyThatUser'])->name('dashboard');
+    Route::get('/dashboard/user/{userSlug}/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified', 'OnlyThatUser'])->name('user.event.detail');
+    Route::get('/dashboard/user/{userSlug}/events/update/{eventType}/{eventSlug}', 'getUpdatedSubmittedEventPage')->middleware(['auth', 'verified', 'OnlyThatUser'])->name('user.event.detail.update');
+    Route::put('/dashboard/user/events/{eventId}', 'updateSubmittedEvent')->middleware(['auth', 'verified', 'OnlyThatUser'])->name('user.event.update');
 });
 
 Route::middleware('auth')->group(function () {
