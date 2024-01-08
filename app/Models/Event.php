@@ -19,6 +19,7 @@ class Event extends Model
         'PIC_email',
         'PIC_phone',
         'organizer_name',
+        'cancel_statement',
         'slug',
         'type',
         'status',

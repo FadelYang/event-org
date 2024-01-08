@@ -13,7 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('cancel_statement')->nullable();
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('cancel_statement');
+        });
     }
 };

@@ -97,4 +97,13 @@ class EventRepository
             'is_publish' => '1'
         ]);
     }
+
+    public function rejectSubmitedEvent($eventId, $cancelStatement)
+    {
+        return $this->getEventById($eventId)->update([
+            'status' => EventCuratedStatusEnum::REJECT->value,
+            'cancel_statement' => $cancelStatement,
+            'is_publish' => '0'
+        ]);
+    }
 }

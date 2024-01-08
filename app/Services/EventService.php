@@ -97,4 +97,9 @@ class EventService
     {
         return $this->eventRepository->publishEvent($eventId);
     }
+
+    public function rejectSubmittedEvent($eventId, $cancelStatement)
+    {
+        return $this->eventRepository->rejectSubmitedEvent($eventId, $cancelStatement);
+    }
 }
