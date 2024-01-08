@@ -10,7 +10,7 @@ class EventRepository
 {
     public function getAllEvent()
     {
-        return Event::with('tickets')->all();
+        return Event::all();
     }
 
     public function getEventById($eventId)
