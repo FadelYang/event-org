@@ -139,7 +139,7 @@
                         </p>
                     @endif
                 </div>
-
+                <input type="text" class="hidden" value="{{ $event->status == App\Enum\EventCuratedStatusEnum::PENDING->value ? App\Enum\EventCuratedStatusEnum::APPROVED->value : App\Enum\EventCuratedStatusEnum::PENDING->value }}" name="status">
                 <div class="mb-2">
                     <p class="text-lg font-semibold mb-2">Is Publish</p>
                     <div>
