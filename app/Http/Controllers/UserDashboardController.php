@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Http\Requests\UpdateSubmittedEventRequest;
 use App\Services\EventService;
 use App\Services\PaymentService;
@@ -71,11 +72,11 @@ class UserDashboardController extends Controller
 
                 $requestData['potrait_banner'] = $potraitBannerName;
 
-                $request->potrait_banner->move(public_path('images/potraitBanner/'), $potraitBannerName);
-
                 if ($event->potrait_banner != null) {
-                    File::delete(public_path('images/potraitBanner/'. $potraitBannerName));
+                    File::delete(public_path('images/potraitBanner/'. $event->potrait_banner));
                 }
+
+                $request->potrait_banner->move(public_path('images/potraitBanner/'), $potraitBannerName);
             }
 
             if ($request->landscape_banner) {
@@ -83,11 +84,11 @@ class UserDashboardController extends Controller
 
                 $requestData['landscape_banner'] = $landscapeBannerName;
 
-                $request->landscape_banner->move(public_path('images/landscapeBanner/'), $landscapeBannerName);
-
                 if ($event->landscape_banner != null) {
-                    File::delete(public_path('images/landscapeBanner/'. $landscapeBannerName));
+                    File::delete(public_path('images/landscapeBanner/'. $event->landscape_banner));
                 }
+
+                $request->landscape_banner->move(public_path('images/landscapeBanner/'), $landscapeBannerName);
             }
 
             $this->eventService->updateSubmittedEvent($eventId, $requestData);

@@ -30,6 +30,7 @@ class UpdateSubmittedEventRequest extends FormRequest
             'title' => 'required|max:50',
             'description' => 'required|max:2000',
             'is_online' => 'required|boolean',
+            'status' => 'required|in:pending,approved,reject',
             'is_publish' => 'required|boolean',
             'type' => 'required',
             'location' => 'required|max:200',
