@@ -16,8 +16,18 @@
                         {{ __('Home') }}
                     </x-nav-link>
                     <x-nav-link :href="route('event.create')" :active="request()->routeIs('event.create')">
-                        {{ __('Create Your Event') }}
+                        {{ __('Buat Event') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('event.get')" :active="request()->routeIs('event.get')">
+                        {{ __('Semua Event') }}
+                    </x-nav-link>
+                    @auth
+                    @if (Auth::user()->role == app\Enum\UserRoleEnum::ADMIN)
+                        <x-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
+                            {{ __('Dashboard Admin') }}
+                        </x-nav-link>
+                    @endif
+                @endauth
                 </div>
             </div>
 
@@ -53,15 +63,15 @@
                                 <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('logout')"
-                                        onclick="logoutConfirmation(event)">
+                                    <x-dropdown-link :href="route('logout')" onclick="logoutConfirmation(event)">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                            in</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
@@ -95,6 +105,22 @@
                 @auth
                     <x-responsive-nav-link :href="route('dashboard', Auth::user()->id)" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home') || request()->routeIs('main-page')">
+                        {{ __('Home') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('event.create')" :active="request()->routeIs('event.create')">
+                        {{ __('Buat Event') }}
+                    </x-responsive-nav-link>
+                    @auth
+                        @if (Auth::user()->role == app\Enum\UserRoleEnum::ADMIN)
+                            <x-responsive-nav-link :href="route('admin.home')" :active="request()->routeIs('event.create')">
+                                {{ __('Dashboard Admin') }}
+                            </x-responsive-nav-link>
+                        @endif
+                    @endauth
+                    <x-responsive-nav-link :href="route('event.create')" :active="request()->routeIs('event.create')">
+                        {{ __('Semua Event') }}
                     </x-responsive-nav-link>
                 @else
                     <x-responsive-nav-link :href="route('login')">
