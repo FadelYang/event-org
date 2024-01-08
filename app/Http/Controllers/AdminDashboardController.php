@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enum\EventCuratedStatusEnum;
+use App\Http\Requests\RejectSubmittedEventRequest;
 use App\Services\EventService;
 use App\Services\TicketService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AdminDashboardController extends Controller
 {
@@ -14,7 +16,8 @@ class AdminDashboardController extends Controller
     protected $ticketService;
     protected $userService;
 
-    public function __construct(EventService $eventService, TicketService $ticketService, UserService $userService) {
+    public function __construct(EventService $eventService, TicketService $ticketService, UserService $userService)
+    {
         $this->eventService = $eventService;
         $this->ticketService = $ticketService;
         $this->userService = $userService;
@@ -44,13 +47,46 @@ class AdminDashboardController extends Controller
         ]);
     }
 
-    public function forms()
+    public function getDetailSubmittedEvent($eventType, $eventSlug)
     {
-        return view('admin.index');
+        $event = $this->eventService->getEventByTypeAndSlug($eventType, $eventSlug);
+
+        $eventTickets = $this->ticketService->getTicketByEvent($event->id);
+
+        return view('admin.pages.event.detail-event', [
+            'event' => $event,
+            'eventTickets' => $eventTickets,
+        ]);
     }
 
-    public function cards()
+    public function approveAndPublishEvent($eventId)
     {
-        return view('admin.index');
+        $event = $this->eventService->getEventById($eventId);
+
+        try {
+            $this->eventService->approveEvent($event->id);
+            $this->eventService->publishEvent($event->id);
+
+            return back()->with('success-alert', 'Update Event Success')->with('alert-message', 'sukses mengkruasi dan menayangkan event');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error-alert', 'Update Event Fail')->with('alert-message', 'ada kendala, gagal mengkurasi dan menayangkan event');
+        }
+    }
+
+    public function rejectSubmittedEvent(RejectSubmittedEventRequest $request, $eventId)
+    {
+        try {
+            $requestData = $request->validated();
+
+            $cancelStatement = $requestData['cancel_statement'];
+
+            $this->eventService->rejectSubmittedEvent($eventId, $cancelStatement);
+
+            return back()->with('success-alert', 'Reject Event Success')->with('alert-message', 'sukses menolak pendaftaran event, pengguna akan diberitahu untuk memperbaiki data');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return back()->with('error-alert', 'Reject Event Fail')->with('alert-message', 'ada kendala, gagal menolak pendaftaran event');
+        }
     }
 }

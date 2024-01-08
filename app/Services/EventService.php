@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Repositories\EventRepository;
 
 class EventService
@@ -16,6 +17,11 @@ class EventService
     public function getAllEvent()
     {
         return $this->eventRepository->getAllEvent();
+    }
+
+    public function getApprovedAndPublishEvent($event)
+    {
+        return $event->where('is_publish', 1)->where('status', EventCuratedStatusEnum::APPROVED->value);
     }
 
     public function getEventById($eventId)
@@ -80,5 +86,25 @@ class EventService
     public function getLatestCreatedEventByUser($userId)
     {
         return $this->eventRepository->getLatestCreatedEventByUser($userId);
+    }
+
+    public function approveEvent($eventId)
+    {
+        return $this->eventRepository->approveEvent($eventId);
+    }
+
+    public function publishEvent($eventId)
+    {
+        return $this->eventRepository->publishEvent($eventId);
+    }
+
+    public function rejectSubmittedEvent($eventId, $cancelStatement)
+    {
+        return $this->eventRepository->rejectSubmitedEvent($eventId, $cancelStatement);
+    }
+
+    public function updateSubmittedEvent($eventId, $data)
+    {
+        return $this->eventRepository->updateSubmittedEvent($eventId, $data);
     }
 }

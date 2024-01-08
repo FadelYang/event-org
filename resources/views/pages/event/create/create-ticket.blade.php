@@ -61,7 +61,7 @@
         <h2 class="text-2xl font-bold mb-2">Input Detail Ticket</h2>
         <div>
             {{-- <form action="{{ route('ticket.create', $event->slug) }}"> --}}
-            <form action="{{ route('ticket.create') }}" method="POST">
+            <form action="{{ route('ticket.create') }}" method="POST" id="create-tickets-form" onsubmit="createTicketConfirmation(event)">
                 @csrf
                 <div class="mb-1">
                     <x-input-label for="ticket_type" :value="__('Jumlah tipe tiket (contoh: 2 untuk regular dan VIP)')" />
@@ -181,6 +181,28 @@
                 }
 
 
+            }
+        </script>
+
+        <script>
+            function createTicketConfirmation(event) {
+                event.preventDefault()
+
+                let form = document.getElementById('create-tickets-form')
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "mohon cek kembali form sebelum sumbit, anda tidak akan bisa mengubah seluruh data ticket jika sudah disubmit!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Create tickets!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit()
+                    }
+                })
             }
         </script>
     @endpush

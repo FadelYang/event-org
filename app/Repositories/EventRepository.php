@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enum\EventCuratedStatusEnum;
 use App\Enum\EventTypeEnum;
 use App\Models\Event;
 
@@ -49,21 +50,21 @@ class EventRepository
 
     public function getAllPilihanEvent()
     {
-        $events = Event::where('is_premium', true)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('is_premium', true)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllPelatihanEvent()
     {
-        $events = Event::where('type', EventTypeEnum::PELATIHAN->value)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('type', EventTypeEnum::PELATIHAN->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllSeminarEvent()
     {
-        $events = Event::where('type', EventTypeEnum::SEMINAR->value)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('type', EventTypeEnum::SEMINAR->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
@@ -81,5 +82,33 @@ class EventRepository
     public function getLatestCreatedEventByUser($userId)
     {
         return Event::where('user_id', $userId)->orderBy('id', 'desc')->first();
+    }
+
+    public function approveEvent($eventId)
+    {
+        return $this->getEventById($eventId)->update([
+            'status' => EventCuratedStatusEnum::APPROVED->value
+        ]);
+    }
+
+    public function publishEvent($eventId)
+    {
+        return $this->getEventById($eventId)->update([
+            'is_publish' => '1'
+        ]);
+    }
+
+    public function rejectSubmitedEvent($eventId, $cancelStatement)
+    {
+        return $this->getEventById($eventId)->update([
+            'status' => EventCuratedStatusEnum::REJECT->value,
+            'cancel_statement' => $cancelStatement,
+            'is_publish' => '0'
+        ]);
+    }
+
+    public function updateSubmittedEvent($eventId, $data)
+    {
+        return $this->getEventById($eventId)->update($data);
     }
 }

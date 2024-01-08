@@ -133,7 +133,7 @@
                                         publish</span>
                                 </td>
                             @endif
-                            <td><a href="#">action</a></td>
+                            <td>@include('admin.pages.event.action-dropdown')</td>
                         </tr>
                     @endforeach
                 </tbody>
