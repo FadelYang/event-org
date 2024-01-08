@@ -43,7 +43,7 @@
         <h1 class="text-4xl font-bold mb-5">Lengkapi form di bawah untuk membuat event</h1>
         <div class="mt-5">
             <form action="{{ route('event.create.ticket') }}" method="post" class="flex flex-col gap-3"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data" id="create-basic-event">
                 @csrf
                 <div class="mb-2">
                     <h2 class="text-2xl font-bold mb-2">Detail Penyelenggara</h2>
@@ -136,7 +136,8 @@
 
 
                 <button type="submit"
-                    class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4">Buat
+                    class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800 mt-4"
+                    onclick="createBasicEventConfirmation(event)">Buat
                     Event</button>
             </form>
         </div>
@@ -153,5 +154,27 @@
                 });
             </script>
         @endif
+
+        <script>
+            function createBasicEventConfirmation(event) {
+            event.preventDefault()
+
+            let form = document.getElementById('create-basic-event')
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "mohon cek kembali form sebelum sumbit, anda tidak akan bisa mengubah seluruh data event jika sudah disubmit!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Create event!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit()
+                }
+            })
+        }
+        </script>
     @endpush
 </x-app-layout>

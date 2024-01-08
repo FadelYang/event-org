@@ -183,5 +183,27 @@
 
             }
         </script>
+
+        <script>
+            function createTicketConfirmation(event) {
+                event.preventDefault()
+
+                let form = document.getElementById('create-basic-event')
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "mohon cek kembali form sebelum sumbit, anda tidak akan bisa mengubah seluruh data ticket jika sudah disubmit!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Create tickets!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit()
+                    }
+                })
+            }
+        </script>
     @endpush
 </x-app-layout>
