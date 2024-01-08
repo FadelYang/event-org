@@ -23,18 +23,18 @@ Route::get('/', [HomeController::class, 'getHomePage'])->name('main-page');
 
 Route::controller(AdminDashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')->middleware(['auth', 'verified', 'admin'])->name('admin.home');
-    Route::get('/dashboard/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.event.detail');
-    Route::put('/dashboard/events/{eventId}', 'approveAndPublishEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.approve-and-publish-event');
-    Route::put('/dashboard/events/cancel/{eventId}', 'rejectSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.reject-submitted-event');
+    Route::get('/dashboard/admin/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.event.detail');
+    Route::put('/dashboard/admin/events/{eventId}', 'approveAndPublishEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.approve-and-publish-event');
+    Route::put('/dashboard/admin/events/cancel/{eventId}', 'rejectSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.reject-submitted-event');
 });
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');
 
 Route::controller(UserDashboardController::class)->group(function () {
-    Route::get('/dashboard/{userId}', 'getUserDashboard')->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/dashboard/{userSlug}/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.detail');
-    Route::get('/dashboard/{userSlug}/events/update/{eventType}/{eventSlug}', 'getUpdatedSubmittedEventPage')->middleware(['auth', 'verified'])->name('user.event.detail.update');
-    Route::put('/dashboard/events/{eventId}', 'updateSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.update');
+    Route::get('/dashboard/user/{userId}', 'getUserDashboard')->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard/user/{userSlug}/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.detail');
+    Route::get('/dashboard/user/{userSlug}/events/update/{eventType}/{eventSlug}', 'getUpdatedSubmittedEventPage')->middleware(['auth', 'verified'])->name('user.event.detail.update');
+    Route::put('/dashboard/user/events/{eventId}', 'updateSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.update');
 });
 
 Route::middleware('auth')->group(function () {

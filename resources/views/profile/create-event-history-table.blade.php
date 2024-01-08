@@ -45,7 +45,16 @@
                             publish</span>
                     </td>
                 @endif
-                <td><a href="#">action</a></td>
+                <td>
+                    <div class="flex">
+                        <div class="text-blue-500">
+                            <a href="{{ route('user.event.detail', [Auth::user()->name, $event->type, $event->slug]) }}">
+                                Detail Event
+                            </a>
+                        </div>
+                    </div>
+                    
+                </td>
             </tr>
         @endforeach
     </tbody>

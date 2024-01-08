@@ -34,13 +34,13 @@
     </div>
 
     <script src="{{ asset('js/alpine.min.js') }}" defer></script>
-    <script src="{{ asset('js/Chart.min.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/Chart.min.js') }}" defer></script> --}}
     <script src="{{ asset('js/init-alpine.js') }}"></script>
-    <script src="{{ asset('js/charts-lines.js') }}" defer></script>
-    <script src="{{ asset('js/charts-pie.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="{{ asset('js/charts-lines.js') }}" defer></script>
+    <script src="{{ asset('js/charts-pie.js') }}" defer></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
         integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     @stack('javascript')
     @if (session('success-alert'))

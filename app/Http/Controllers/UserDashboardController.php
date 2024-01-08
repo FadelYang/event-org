@@ -7,6 +7,8 @@ use App\Services\EventService;
 use App\Services\PaymentService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class UserDashboardController extends Controller
 {
@@ -25,7 +27,7 @@ class UserDashboardController extends Controller
     {
         $paymentHistories = $this->paymentService->getUserPaymentHistory($userId);
         $createEventHistories = $this->eventService->getEventByUserId($userId);
-        // dd($createEventHistories->all());
+        // 
 
         return view('dashboard', [
             'paymentHistories' => $paymentHistories,
@@ -59,10 +61,45 @@ class UserDashboardController extends Controller
 
     public function updateSubmittedEvent(UpdateSubmittedEventRequest $request, $eventId)
     {
+        $event = $this->eventService->getEventById($eventId);
+
         try {
-            dd($request);
+            $requestData = $request->validated();
+
+            if ($request->potrait_banner) {
+                $potraitBannerName = time() . '.' . $request->potrait_banner->extension();
+
+                $requestData['potrait_banner'] = $potraitBannerName;
+
+                $request->potrait_banner->move(public_path('images/potraitBanner/'), $potraitBannerName);
+
+                if ($event->potrait_banner != null) {
+                    File::delete(public_path('images/potraitBanner/'. $potraitBannerName));
+                }
+            }
+
+            if ($request->landscape_banner) {
+                $landscapeBannerName = time() . '.' . $request->landscape_banner->extension();
+
+                $requestData['landscape_banner'] = $landscapeBannerName;
+
+                $request->landscape_banner->move(public_path('images/landscapeBanner/'), $landscapeBannerName);
+
+                if ($event->landscape_banner != null) {
+                    File::delete(public_path('images/landscapeBanner/'. $landscapeBannerName));
+                }
+            }
+
+            $this->eventService->updateSubmittedEvent($eventId, $requestData);
+
+            return redirect(route(
+                'user.event.detail',
+                [Auth::user()->name, $event->type, $event->slug]
+            ))
+            ->with('success-alert', 'Update Event Success')
+            ->with('alert-message', "Sukses merubah data event");
         } catch (\Throwable $th) {
-            //throw $th;
+            dd($th);
         }
     }
 }
