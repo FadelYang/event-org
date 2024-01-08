@@ -10,7 +10,7 @@ class EventRepository
 {
     public function getAllEvent()
     {
-        return Event::all();
+        return Event::with('tickets')->all();
     }
 
     public function getEventById($eventId)
@@ -50,21 +50,21 @@ class EventRepository
 
     public function getAllPilihanEvent()
     {
-        $events = Event::where('is_premium', true)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('is_premium', true)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllPelatihanEvent()
     {
-        $events = Event::where('type', EventTypeEnum::PELATIHAN->value)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('type', EventTypeEnum::PELATIHAN->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
 
     public function getAllSeminarEvent()
     {
-        $events = Event::where('type', EventTypeEnum::SEMINAR->value)->orderBy('id', 'desc')->get();
+        $events = Event::with('tickets')->where('type', EventTypeEnum::SEMINAR->value)->orderBy('id', 'desc')->get();
 
         return $events;
     }
@@ -105,5 +105,10 @@ class EventRepository
             'cancel_statement' => $cancelStatement,
             'is_publish' => '0'
         ]);
+    }
+
+    public function updateSubmittedEvent($eventId, $data)
+    {
+        return $this->getEventById($eventId)->update($data);
     }
 }
