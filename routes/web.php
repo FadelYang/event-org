@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
@@ -18,11 +19,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'getHomePage']);
+Route::get('/', [HomeController::class, 'getHomePage'])->name('main-page');
+
+Route::controller(AdminDashboardController::class)->group(function () {
+    Route::get('/dashboard', 'index')->middleware(['auth', 'verified', 'admin'])->name('admin.home');
+    Route::get('/dashboard/admin/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.event.detail');
+    Route::put('/dashboard/admin/events/{eventId}', 'approveAndPublishEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.approve-and-publish-event');
+    Route::put('/dashboard/admin/events/cancel/{eventId}', 'rejectSubmittedEvent')->middleware(['auth', 'verified', 'admin'])->name('admin.reject-submitted-event');
+});
 
 Route::get('/home', [HomeController::class, 'getHomePage'])->name('home');
 
-Route::get('/dashboard/{userId}', [UserDashboardController::class, 'getUserDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::controller(UserDashboardController::class)->group(function () {
+    Route::get('/dashboard/user/{userId}', 'getUserDashboard')->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard/user/{userSlug}/events/{eventType}/{eventSlug}', 'getDetailSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.detail');
+    Route::get('/dashboard/user/{userSlug}/events/update/{eventType}/{eventSlug}', 'getUpdatedSubmittedEventPage')->middleware(['auth', 'verified'])->name('user.event.detail.update');
+    Route::put('/dashboard/user/events/{eventId}', 'updateSubmittedEvent')->middleware(['auth', 'verified'])->name('user.event.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

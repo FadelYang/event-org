@@ -24,4 +24,9 @@ class TicketRepository
     {
         return Ticket::create($requestData);
     }
+
+    public function getAllTicket()
+    {
+        return Ticket::all();
+    }
 }

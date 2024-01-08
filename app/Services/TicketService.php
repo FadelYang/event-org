@@ -31,4 +31,9 @@ class TicketService
     {
         return $this->ticketRepository->createTicketForEvent($requestData);
     }
+
+    public function getAllTicket()
+    {
+        return $this->ticketRepository->getAllTicket();
+    }
 }

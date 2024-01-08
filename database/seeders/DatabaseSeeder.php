@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,24 +17,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        DB::beginTransaction();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        try {
+            $this->call([
+                UserAdminSeeder::class
+            ]);
         
-        $this->call([
-            UserAdminSeeder::class
-        ]);
-
-        User::factory()
-            ->count(8)
-            ->has(
-                Event::factory()
-                    ->count(3)
-                    ->has(Ticket::factory()->count(2))
-            )
-            ->create(['role' => 'regular']);
+            User::factory()
+                ->count(8)
+                ->has(
+                    Event::factory()
+                        ->statusAndIsPublishTrue()
+                        ->count(3)
+                        ->has(Ticket::factory()->count(2))
+                )
+                ->create(['role' => 'regular']);
+        
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }
