@@ -61,7 +61,7 @@
         <h2 class="text-2xl font-bold mb-2">Input Detail Ticket</h2>
         <div>
             {{-- <form action="{{ route('ticket.create', $event->slug) }}"> --}}
-            <form action="{{ route('ticket.create') }}" method="POST">
+            <form action="{{ route('ticket.create') }}" method="POST" id="create-tickets-form" onsubmit="createTicketConfirmation(event)">
                 @csrf
                 <div class="mb-1">
                     <x-input-label for="ticket_type" :value="__('Jumlah tipe tiket (contoh: 2 untuk regular dan VIP)')" />
@@ -188,7 +188,7 @@
             function createTicketConfirmation(event) {
                 event.preventDefault()
 
-                let form = document.getElementById('create-basic-event')
+                let form = document.getElementById('create-tickets-form')
 
                 Swal.fire({
                     title: "Are you sure?",
