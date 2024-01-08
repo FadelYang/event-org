@@ -66,6 +66,7 @@
         function logoutConfirmationAdmin(event) {
             event.preventDefault()
 
+            console.log('you click me');
             let form = document.getElementById('logout-form')
 
             Swal.fire({
@@ -82,6 +83,8 @@
                 }
             })
         }
+
+        console.log('this script are rendered');
     </script>
 </body>
 
