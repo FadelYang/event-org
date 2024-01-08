@@ -22,12 +22,12 @@
                 <p>Event ini belum dikurasi dan belum tayang.</p>
             </div>
         @else
-            <div class="my-6 p-6 leading-tighttext-red-500 bg-red-200 text-red-500 rounded-l rounded-lg">
+            <div class="my-6 p-6 leading-tighttext-red-500 bg-red-100 text-red-700  dark:text-red-100 dark:bg-red-700 rounded-lg">
                 <p>Event ini sudah dikurasi dan ditolak, alasan penolakan</p>
                 <ul class="ms-5 list-disc">
                     <li>{{ $event->cancel_statement }}</li>
                 </ul>
-                <p class="text-red-700 underline mt-2"><a
+                <p class="text-red-700 underline mt-2 dark:text-red-100"><a
                         href="{{ route('user.event.detail', [Auth::user()->name, $event->type, $event->slug]) }}">Update
                         informasi event</a></p>
             </div>
