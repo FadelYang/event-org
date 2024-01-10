@@ -262,4 +262,9 @@ class EventController
             ])->with('success-alert', 'Create Event Success')->with('alert-message', 'create event success, please add detail ticket here');
         }
     }
+
+    public function finishEvent()
+    {
+        
+    } 
 }

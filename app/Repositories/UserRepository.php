@@ -12,4 +12,18 @@ class UserRepository
     {
         return User::all();
     }
+
+    public function getUserById($userId)
+    {
+        return User::where('id', $userId)->first();
+    }
+
+    public function addExp($userId, $totalAddExp)
+    {
+        $user = $this->getUserById($userId);
+
+        return User::updated([
+            'exp' => $user->exp + $totalAddExp
+        ]);
+    }
 }

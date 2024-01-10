@@ -22,12 +22,12 @@
                         {{ __('Semua Event') }}
                     </x-nav-link>
                     @auth
-                    @if (Auth::user()->role == app\Enum\UserRoleEnum::ADMIN)
-                        <x-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
-                            {{ __('Dashboard Admin') }}
-                        </x-nav-link>
-                    @endif
-                @endauth
+                        @if (Auth::user()->role == app\Enum\UserRoleEnum::ADMIN)
+                            <x-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
+                                {{ __('Dashboard Admin') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -35,6 +35,8 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @if (Route::has('login'))
                     @auth
+                        <p class="px-4 py-1 rounded-lg hero-banner">
+                            {{ Auth::user()->exp == null ? '0 exp' : Auth::user()->exp . ' exp' }}</p>
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -103,6 +105,12 @@
         <div class="pt-2 pb-3 space-y-1">
             @if (Route::has('login'))
                 @auth
+                    <x-responsive-nav-link>
+                        <p class="px-4 py-1 rounded-lg hero-banner w-20 ms-3">
+                            {{ Auth::user()->exp == null ? '0 exp' : Auth::user()->exp . ' exp' }}</p>
+                    </x-responsive-nav-link>
+                   
+
                     <x-responsive-nav-link :href="route('dashboard', Auth::user()->id)" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-responsive-nav-link>
