@@ -28,6 +28,7 @@ class Event extends Model
         'is_premium',
         'is_online',
         'is_publish',
+        'is_finish',
         'potrait_banner',
         'total_day',
         'landscape_banner',
@@ -37,6 +38,7 @@ class Event extends Model
 
     protected $attributes = [
         'is_premium' => true,
+        'is_finish' => false,
         'is_publish' => false,
         'status' => EventCuratedStatusEnum::PENDING->value
     ];
