@@ -17,4 +17,9 @@ class UserService
     {
         return $this->userRepository->getAllUser();
     }
+
+    public function addUserExpAfterFinishEvent($userId, $totalAddExp)
+    {
+        return $this->userRepository->addExp($userId, $totalAddExp);
+    }
 }
