@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enum\PaymentStatusEnum;
 use App\Http\Requests\CreateEventRequest;
-use App\Models\payment;
+use App\Models\Payment;
 use App\Services\EventService;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -169,7 +169,7 @@ class EventController
         // it will create new item if refresh
         // need updated_at field in Payment table for got the newest update
         // or update all record by order_id
-        $payment = payment::create($request->all());
+        $payment = Payment::create($request->all());
 
         return view('pages.event.checkout.main-checkout', [
             'payment' => $payment,
@@ -197,6 +197,8 @@ class EventController
                 $payment->update(['status' => 'success']);
             }
         }
+
+        return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
     }
 
     public function getCreateBasicEventPage()
