@@ -42,9 +42,16 @@ class UserDashboardController extends Controller
 
         $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
+        $eventParticipants = $event->participants;
+
+        // foreach ($eventParticipants as $value) {
+        //     dd(json_decode($value->item_detail)[0]);
+        // }
+
         return view('profile.dashboard.event-detail', [
             'event' => $event,
             'eventTickets' => $eventTickets,
+            'eventParticipants' => $eventParticipants
         ]);
     }
 
@@ -100,7 +107,7 @@ class UserDashboardController extends Controller
             ->with('success-alert', 'Update Event Success')
             ->with('alert-message', "Sukses merubah data event");
         } catch (\Throwable $th) {
-            dd($th);
+            return back()->with('error-alert', 'Oops')->with('alert-message', $th);
         }
     }
 }

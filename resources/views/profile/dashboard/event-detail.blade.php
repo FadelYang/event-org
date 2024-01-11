@@ -18,13 +18,11 @@
             @endif
         </div>
         @if ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value)
-            <div
-                class="my-6 p-6 leading-tight text-green-700 bg-green-100 rounded-lg">
+            <div class="my-6 p-6 leading-tight text-green-700 bg-green-100 rounded-lg">
                 <p>Event ini sudah dikurasi dan tayang</p>
             </div>
         @elseif ($event->status == App\Enum\EventCuratedStatusEnum::PENDING->value)
-            <div
-                class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
+            <div class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
                 <p>Event ini belum dikurasi dan belum tayang.</p>
             </div>
         @else
@@ -124,8 +122,7 @@
                             class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">publish</span>
                     </p>
                 @else
-                    <p><span
-                            class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Not
+                    <p><span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Not
                             publish</span>
                     </p>
                 @endif
@@ -139,9 +136,10 @@
             </div>
         </div>
         @if ($event->status != App\Enum\EventCuratedStatusEnum::PENDING->value)
-            
         @endif
-        <a href="{{ route('user.event.detail.update', [Auth::user()->name, $event->type, $event->slug]) }}" class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Update Event</a>
+        <a href="{{ route('user.event.detail.update', [Auth::user()->name, $event->type, $event->slug]) }}"
+            class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Update
+            Event</a>
         <h2 class="my-6 text-2xl font-semibold">
             Detail Event Ticket
         </h2>
@@ -160,4 +158,26 @@
                 </div>
             @endforeach
         </div>
+        <h2 class="my-6 text-2xl font-semibold">
+            Detail Participant
+        </h2>
+        <div class="mb-2">
+            <div>
+                @include('profile.dashboard.event-participant-table')
+            </div>
+        </div>
+
+        @push('javascript')
+            <script>
+                let eventParticipantTable = new DataTable('#eventParticipantTable', {
+                    "pageLength": 10,
+                    "dom": 'frtip',
+                    "order": [0, 'desc'],
+                    "initComplete": function(settings, json) {
+                        $("#eventParticipantTable").wrap(
+                            "<div style='overflow:auto; width:100%;position:relative;'></div>");
+                    },
+                });
+            </script>
+        @endpush
 </x-app-layout>

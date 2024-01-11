@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class, 'user_id', 'id');
     }
+
+    public function eventParticipants(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'user_id', 'id');
+    }
 }
