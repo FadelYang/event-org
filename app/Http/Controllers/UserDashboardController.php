@@ -42,8 +42,6 @@ class UserDashboardController extends Controller
 
         $eventTickets = $this->ticketService->getTicketByEvent($event->id);
 
-        $eventParticipants = $event->participants;
-
         // foreach ($eventParticipants as $value) {
         //     dd(json_decode($value->item_detail)[0]);
         // }
@@ -51,7 +49,8 @@ class UserDashboardController extends Controller
         return view('profile.dashboard.event-detail', [
             'event' => $event,
             'eventTickets' => $eventTickets,
-            'eventParticipants' => $eventParticipants
+            'eventParticipants' => $event->participants,
+            'rowNumber' => 1 
         ]);
     }
 

@@ -56,5 +56,10 @@ class Event extends Model
     public function participants(): HasMany
     {
         return $this->hasMany(Payment::class, 'event_id', 'id');
-    } 
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'event_id', 'id');
+    }
 }
