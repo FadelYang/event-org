@@ -7,8 +7,7 @@
 
     <div class="mt-3 max-w-7xl mx-1 lg:px-8 xl:mx-auto">
         @if ($errors->any())
-            <div
-                class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
+            <div class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -133,14 +132,18 @@
                             <span
                                 class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">Pending</span>
                         </p>
-                    @else
+                    @elseif($event->status == App\Enum\EventCuratedStatusEnum::FINISH->value)
                         <p><span
-                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Reject</span>
+                                class="px-2 py-1 font-semibold leading-tight text-violet-700 bg-violet-100 rounded-full">Finish</span>
                         </p>
+                    @else
+                        <p>tidak ada keterangan</p>
                     @endif
                 </div>
-                
-                <input type="text" class="hidden" value="{{ $event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value ? App\Enum\EventCuratedStatusEnum::APPROVED->value : App\Enum\EventCuratedStatusEnum::PENDING->value }}" name="status">
+
+                <input type="text" class="hidden"
+                    value="{{ $event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value ? App\Enum\EventCuratedStatusEnum::APPROVED->value : App\Enum\EventCuratedStatusEnum::PENDING->value }}"
+                    name="status">
 
                 <div class="mb-2">
                     <p class="text-lg font-semibold mb-2">Is Publish</p>

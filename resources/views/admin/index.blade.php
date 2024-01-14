@@ -118,9 +118,15 @@
                                     <span
                                         class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">Pending</span>
                                 </td>
+                            @elseif($event->status == App\Enum\EventCuratedStatusEnum::FINISH->value)
+                                <td>
+                                    <p><span
+                                            class="px-2 py-1 font-semibold leading-tight text-purple-600 bg-purple-100 rounded-full">Finish</span>
+                                    </p>
+                                </td>
                             @else
-                                <td><span
-                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">Reject</span>
+                                <td>
+                                    <p>tidak ada keterangan</p>
                                 </td>
                             @endif
                             @if ($event->is_publish == 1)

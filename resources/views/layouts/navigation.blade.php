@@ -106,7 +106,7 @@
             @if (Route::has('login'))
                 @auth
                     <x-responsive-nav-link>
-                        <p class="px-4 py-1 rounded-lg hero-banner w-20 ms-3">
+                        <p class="px-4 py-1 rounded-lg hero-banner ms-3 w-36">
                             {{ Auth::user()->exp == null ? '0 exp' : Auth::user()->exp . ' exp' }}</p>
                     </x-responsive-nav-link>
                    

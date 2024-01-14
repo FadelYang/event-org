@@ -22,7 +22,8 @@
                 <p>Event ini belum dikurasi dan belum tayang.</p>
             </div>
         @else
-            <div class="my-6 p-6 leading-tighttext-red-500 bg-red-100 text-red-700  dark:text-red-100 dark:bg-red-700 rounded-lg">
+            <div
+                class="my-6 p-6 leading-tighttext-red-500 bg-red-100 text-red-700  dark:text-red-100 dark:bg-red-700 rounded-lg">
                 <p>Event ini sudah dikurasi dan ditolak, alasan penolakan</p>
                 <ul class="ms-5 list-disc">
                     <li>{{ $event->cancel_statement }}</li>
@@ -104,10 +105,12 @@
                         <span
                             class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">Pending</span>
                     </p>
-                @else
+                @elseif($event->status == App\Enum\EventCuratedStatusEnum::FINISH->value)
                     <p><span
-                            class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">Reject</span>
+                            class="px-2 py-1 font-semibold leading-tight text-violet-700 bg-violet-100 rounded-full">Finish</span>
                     </p>
+                @else
+                    <p>tidak ada keterangan</p>
                 @endif
             </div>
 

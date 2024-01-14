@@ -107,4 +107,9 @@ class EventService
     {
         return $this->eventRepository->updateSubmittedEvent($eventId, $data);
     }
+
+    public function finishEvent($eventId)
+    {
+        return $this->eventRepository->finishEvent($eventId);
+    }
 }
