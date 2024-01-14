@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class payment extends Model
+class Payment extends Model
 {
     use HasFactory;
 
@@ -30,5 +32,10 @@ class payment extends Model
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'event_id', 'id');
+    }
+
+    public function ticketOwner(): HasOne
+    {
+        return $this->HasOne(User::class, 'id', 'user_id');
     }
 }

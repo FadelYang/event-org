@@ -18,16 +18,14 @@
             @endif
         </div>
         @if ($event->status == App\Enum\EventCuratedStatusEnum::APPROVED->value)
-            <div
-                class="my-6 p-6 leading-tight text-green-700 bg-green-100 rounded-lg">
+            <div class="my-6 p-6 leading-tight text-green-700 bg-green-100 rounded-lg">
                 <p>Event ini sudah dikurasi dan tayang</p>
             </div>
         @elseif ($event->status == App\Enum\EventCuratedStatusEnum::PENDING->value)
-            <div
-                class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
+            <div class="my-6 p-6 leading-tight text-orange-700 bg-orange-100 rounded-lg">
                 <p>Event ini belum dikurasi dan belum tayang.</p>
             </div>
-        @else
+        @elseif ($event->status == App\Enum\EventCuratedStatusEnum::REJECT->value)
             <div class="my-6 p-6 leading-tight bg-red-200 text-red-500 rounded-l rounded-lg">
                 <p>Event ini sudah dikurasi dan ditolak, alasan penolakan</p>
                 <ul class="ms-5 list-disc">
@@ -36,6 +34,10 @@
                 <p class="text-red-700 underline mt-2"><a
                         href="{{ route('user.event.detail', [Auth::user()->name, $event->type, $event->slug]) }}">Update
                         informasi event</a></p>
+            </div>
+        @elseif ($event->status == App\Enum\EventCuratedStatusEnum::FINISH->value)
+            <div class="my-6 p-6 leading-tight bg-violet-200 text-violet-500 rounded-l rounded-lg">
+                <p>Event ini sudah selesai</p>
             </div>
         @endif
 
@@ -49,7 +51,7 @@
                     <img src="{{ asset('images/potraitBanner/' . $event->potrait_banner) }}" alt=""
                         class="w-56" id="potrait-poster" onclick="showPotraitPoster()">
                 @else
-                    <p class="text-lg text-gray-700 mb-2">poster tidak ditemukan</p>
+                    <p class="text-lg text-gray-700">poster tidak ditemukan</p>
                 @endif
 
             </div>
@@ -59,45 +61,45 @@
                     <img src="{{ asset('images/landscapeBanner/' . $event->landscape_banner) }}" alt=""
                         id="landscape-poster" onclick="showLandscapePoster()">
                 @else
-                    <p class="text-lg text-gray-700 mb-2">poster tidak ditemukan</p>
+                    <p class="text-lg text-gray-700">poster tidak ditemukan</p>
                 @endif
             </div>
         </div>
         <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-4">
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Event Name</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->title }}</p>
+                <p class="text-lg text-gray-700">{{ $event->title }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Organizer</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->organizer_name }}</p>
+                <p class="text-lg text-gray-700">{{ $event->organizer_name }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">PIC Email</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->PIC_email }}</p>
+                <p class="text-lg text-gray-700">{{ $event->PIC_email }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">PIC Phone</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->PIC_phone }}</p>
+                <p class="text-lg text-gray-700">{{ $event->PIC_phone }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Tipe Event</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->type }}</p>
+                <p class="text-lg text-gray-700">{{ $event->type }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Start Date</p>
-                <p class="text-lg text-gray-700 mb-2">
+                <p class="text-lg text-gray-700">
                     {{ date('D, d M y', strtotime($event->start_date)) }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">End Date</p>
-                <p class="text-lg text-gray-700 mb-2">
+                <p class="text-lg text-gray-700">
                     {{ date('D, d M y', strtotime($event->start_date . ' + ' . $event->total_day . ' days')) }}</p>
             </div>
 
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Location</p>
-                <p class="text-lg text-gray-700 mb-2">{{ $event->location }}</p>
+                <p class="text-lg text-gray-700">{{ $event->location }}</p>
             </div>
             <div class="mb-2">
                 <p class="text-lg font-semibold mb-2">Status</p>
@@ -110,10 +112,16 @@
                         <span
                             class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">Pending</span>
                     </p>
-                @else
+                @elseif($event->status == App\Enum\EventCuratedStatusEnum::REJECT->value)
                     <p><span
                             class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Reject</span>
                     </p>
+                @elseif($event->status == App\Enum\EventCuratedStatusEnum::FINISH->value)
+                    <p><span
+                            class="px-2 py-1 font-semibold leading-tight text-violet-700 bg-violet-100 rounded-full">Finish</span>
+                    </p>
+                @else
+                    <p>tidak ada keterangan</p>
                 @endif
             </div>
 
@@ -124,8 +132,7 @@
                             class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">publish</span>
                     </p>
                 @else
-                    <p><span
-                            class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Not
+                    <p><span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full">Not
                             publish</span>
                     </p>
                 @endif
@@ -139,9 +146,24 @@
             </div>
         </div>
         @if ($event->status != App\Enum\EventCuratedStatusEnum::PENDING->value)
-            
         @endif
-        <a href="{{ route('user.event.detail.update', [Auth::user()->name, $event->type, $event->slug]) }}" class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Update Event</a>
+        <div class="flex gap-2">
+            <a href="{{ route('user.event.detail.update', [Auth::user()->name, $event->type, $event->slug]) }}"
+                class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800">Update
+                Event</a>
+            <form action="{{ route('event.finish', $event->id) }}" method="POST" enctype="multipart/form-data"
+                id="finish-event-form">
+                @csrf
+                @method('PUT')
+
+                <button type="submit" onclick="finishEventConfirmation(event)"
+                    class="py-2 px-5 border-2 border-black rounded text-lg md:text-xl text-gray-200 bg-gray-800
+                    {{ $event->status == App\Enum\EventCuratedStatusEnum::FINISH->value ? 'opacity-50' : '' }}"
+                    {{ $event->status == App\Enum\EventCuratedStatusEnum::FINISH->value ? 'disable' : '' }}>Finish
+                    Event</button>
+            </form>
+
+        </div>
         <h2 class="my-6 text-2xl font-semibold">
             Detail Event Ticket
         </h2>
@@ -160,4 +182,48 @@
                 </div>
             @endforeach
         </div>
+        <h2 class="my-6 text-2xl font-semibold">
+            Detail Participant
+        </h2>
+        <div class="mb-2">
+            <div>
+                @include('profile.dashboard.event-participant-table')
+            </div>
+        </div>
+
+        @push('javascript')
+            <script>
+                let eventParticipantTable = new DataTable('#eventParticipantTable', {
+                    "pageLength": 10,
+                    "dom": 'frtip',
+                    "order": [0, 'asc'],
+                    "initComplete": function(settings, json) {
+                        $("#eventParticipantTable").wrap(
+                            "<div style='overflow:auto; width:100%;position:relative;'></div>");
+                    },
+                });
+            </script>
+
+            <script>
+                function finishEventConfirmation(event) {
+                    event.preventDefault()
+
+                    let form = document.getElementById('finish-event-form')
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "Event yang sudah selesai tidak bisa dibuka kembali!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, selesaikan!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit()
+                        }
+                    })
+                }
+            </script>
+        @endpush
 </x-app-layout>

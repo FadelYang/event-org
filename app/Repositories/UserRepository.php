@@ -20,10 +20,8 @@ class UserRepository
 
     public function addExp($userId, $totalAddExp)
     {
-        $user = $this->getUserById($userId);
-
-        return User::updated([
-            'exp' => $user->exp + $totalAddExp
+        return $this->getUserById($userId)->update([
+            'exp' => $totalAddExp
         ]);
     }
 }

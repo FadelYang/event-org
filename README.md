@@ -1,5 +1,5 @@
 # Penjuang Event (evenin)
-![Alt text](public/images/image.png)
+![Alt text](public/images/images.png)
 ## Tentang Pejuang Event
 Pejuang Event adalah sebuah platform yang dapat digunakan untuk manajemen dan mempromosikan event. tersedia berbagai tawaran menarik paket promosi event, dan gratis untuk kamu yang seorang pelajar atau mahasiswa.
 

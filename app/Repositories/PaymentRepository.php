@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\payment;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentRepository
@@ -11,7 +11,7 @@ class PaymentRepository
     {
         $userId = Auth::user()->id;
 
-        $payments = payment::where('user_id', $userId)->get();
+        $payments = Payment::where('user_id', $userId)->get();
 
         return $payments;
     }

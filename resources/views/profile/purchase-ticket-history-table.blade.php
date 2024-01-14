@@ -20,18 +20,18 @@
                     <td>{{ $item->event_name }}</td>
                     <td>{{ 'Rp. ' . number_format($item->total_price, 2, ',', '.') }}</td>
                     @if ($item->status == 'success')
-                        <td><span class="p-1 text-sm bg-green-500 rounded-xl border-2 border-g">{{ $item->status }}</span></td>
+                        <td><span class="px-2 py-1 leading-tight text-sm font-semibold text-green-700 bg-green-100 rounded-full">{{ $item->status }}</span></td>
                         <td>{{ date('D, d M y', strtotime($item->created_at)) }}</td>
-                        <td><a href="#" class="p-1 text-sm bg-violet-500 rounded-xl border-2 border-g">Detail Invoice</a>
+                        <td><a href="#" class="px-2 py-1 leading-tight text-sm font-semibold bg-violet-100 text-violet-500 rounded-full">Detail Invoice</a>
                         </td>
                     @elseif ($item->status == 'pending')
-                        <td><span class="p-1 text-sm bg-yellow-500 rounded-xl border-2 border-g">{{ $item->status }}</span></td>
+                        <td><span class="px-2 py-1 leading-tight text-sm font-semibold text-orange-700 bg-orange-100 rounded-full">{{ $item->status }}</span></td>
                         <td>{{ date('D, d M y', strtotime($item->created_at)) }}</td>
-                        <td><a href="#" class="p-1 text-sm bg-orange-500 rounded-xl border-2 border-g">not found</a></td>
+                        <td><a href="#" class="px-2 py-1 leading-tight text-sm font-semibold bg-orange-100 text-orange-500 rounded-full">not found</a></td>
                     @else
-                        <td><span class="p-1 text-sm bg-red-500 rounded-xl border-2 border-g">{{ $item->status }}</span></td>
+                        <td><span class="px-2 py-1 leading-tight text-sm font-semibold  text-red-700 bg-red-100 rounded-full">{{ $item->status }}</span></td>
                         <td>{{ date('D, d M y', strtotime($item->created_at)) }}</td>
-                        <td><a href="#" class="p-1 text-sm bg-violet-500 rounded-xl border-2 border-g">Detail Invoice</a>
+                        <td><a href="#" class="px-2 py-1 leading-tight text-sm font-semibold bg-violet-100 text-violet-500 rounded-full">Detail Invoice</a>
                         </td>
                     @endif
                     {{-- must have updated_at column in database --}}

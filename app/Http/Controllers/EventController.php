@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enum\PaymentStatusEnum;
 use App\Http\Requests\CreateEventRequest;
-use App\Models\payment;
+use App\Models\Payment;
 use App\Services\EventService;
 use App\Services\TicketService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -16,11 +17,13 @@ class EventController
 {
     protected $eventService;
     protected $ticketService;
+    protected $userService;
 
-    public function __construct(EventService $eventService, TicketService $ticketService)
+    public function __construct(EventService $eventService, TicketService $ticketService, UserService $userService)
     {
         $this->eventService = $eventService;
         $this->ticketService = $ticketService;
+        $this->userService = $userService;
     }
 
     public function getAllEventPage()
@@ -169,7 +172,7 @@ class EventController
         // it will create new item if refresh
         // need updated_at field in Payment table for got the newest update
         // or update all record by order_id
-        $payment = payment::create($request->all());
+        $payment = Payment::create($request->all());
 
         return view('pages.event.checkout.main-checkout', [
             'payment' => $payment,
@@ -191,12 +194,14 @@ class EventController
         $serverKey = config('midtrans.server_key');
         $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
-        if($hashed == $request->signature_key) {
+        if ($hashed == $request->signature_key) {
             if ($request->transaction_status == 'capture' || $request->transaction_status == PaymentStatusEnum::PENDING->value) {
                 $payment = Payment::where('order_id', $request->order_id)->first();
                 $payment->update(['status' => 'success']);
             }
         }
+
+        return redirect('home')->with('success-alert', 'Payment Success')->with('alert-message', 'You can check your detail payment here');
     }
 
     public function getCreateBasicEventPage()
@@ -263,8 +268,21 @@ class EventController
         }
     }
 
-    public function finishEvent()
+    public function finishEvent($eventId)
     {
-        
-    } 
+        $event = $this->eventService->getEventById($eventId);
+
+        $eventParticipants = $event->participants->all();
+
+        if (count($eventParticipants) != 0) {
+            foreach ($eventParticipants as $eventParticipant) {
+                $totalExp = $eventParticipant->ticketOwner->exp + ($eventParticipant->total_price * 0.01);
+
+                $this->userService->addUserExpAfterFinishEvent($eventParticipant->user_id, $totalExp);
+            }
+        }
+        // $this->eventService->finishEvent($eventId);
+
+        return back()->with('success-alert', 'Finish Event Success')->with('alert-message', 'event kamu sudah dinyatakan selesai, terimakasih');
+    }
 }

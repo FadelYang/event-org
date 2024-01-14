@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
+use App\Models\Payment;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,14 @@ class DatabaseSeeder extends Seeder
                     Event::factory()
                         ->statusAndIsPublishTrue()
                         ->count(3)
-                        ->has(Ticket::factory()->count(2))
+                        ->has(
+                            Ticket::factory()->count(2)
+                        )
+                        ->has(
+                            Payment::factory()
+                                ->whereEventApproved()
+                                ->count(1000)
+                        )
                 )
                 ->create(['role' => 'regular']);
         

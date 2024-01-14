@@ -36,7 +36,7 @@ class EventRepository
 
     public function getEventByTypeAndSlug($eventType, $eventSlug)
     {
-        $events = Event::where('type', $eventType)->get();
+        $events = Event::with('participants')->where('type', $eventType)->get();
         $event = null;
 
         foreach ($events as $item) {
@@ -110,5 +110,12 @@ class EventRepository
     public function updateSubmittedEvent($eventId, $data)
     {
         return $this->getEventById($eventId)->update($data);
+    }
+
+    public function finishEvent($eventId)
+    {
+        return $this->getEventById($eventId)->update([
+            'status' => EventCuratedStatusEnum::FINISH->value
+        ]);
     }
 }

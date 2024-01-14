@@ -1,5 +1,5 @@
 @if (count($createEventHistories) != 0)
-<table id="paymentHistoryTable" class="display w-full">
+<table id="createEventHistoryTable" class="display w-full">
     <thead class="">
         <tr class="">
             <th class="hidden">Id</th>

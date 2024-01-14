@@ -44,7 +44,7 @@ class TicketController
                 $this->ticketService->createTicketForEvent($createTicketRequestData);
             }
 
-            return redirect('home')->with('success-alert', 'Create Ticket Success')->with('alert-message', 'You can check your ticket detail here');
+            return redirect('home')->with('success-alert', 'Create Ticket Success')->with('alert-message', 'You can check your ticket detail in your dashboard');
         } catch (\Throwable $th) {
             return redirect('ticket.create', $event->slug)
                 ->with('error-alert', 'Opps..')
