@@ -4,8 +4,10 @@ use App\Http\Controllers\EventController;
 use App\Models\Ticket;
 use App\Repositories\EventRepository;
 use App\Repositories\TicketRepository;
+use App\Repositories\UserRepository;
 use App\Services\EventService;
 use App\Services\TicketService;
+use App\Services\UserService;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -29,7 +31,10 @@ Breadcrumbs::for('detailEvent', function (BreadcrumbTrail $trail, $event) {
     $ticketRepository = new TicketRepository();
     $ticketService = new TicketService($ticketRepository);
 
-    $eventController = new EventController($eventService, $ticketService);
+    $userRepository = new UserRepository();
+    $userService = new UserService($userRepository);
+
+    $eventController = new EventController($eventService, $ticketService, $userService);
 
     $eventDetail = $eventController->getEventDetail($event[0], $event[1]);
 
@@ -47,7 +52,10 @@ Breadcrumbs::for('checkoutTicket', function (BreadcrumbTrail $trail, $event) {
     $ticketRepository = new TicketRepository();
     $ticketService = new TicketService($ticketRepository);
 
-    $eventController = new EventController($eventService, $ticketService);
+    $userRepository = new UserRepository();
+    $userService = new UserService($userRepository);
+
+    $eventController = new EventController($eventService, $ticketService, $userService);
 
     $eventDetail = $eventController->getEventDetail($event[0], $event[1]);
 

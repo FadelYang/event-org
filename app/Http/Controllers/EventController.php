@@ -281,7 +281,8 @@ class EventController
                 $this->userService->addUserExpAfterFinishEvent($eventParticipant->user_id, $totalExp);
             }
         }
-        // $this->eventService->finishEvent($eventId);
+
+        $this->eventService->finishEvent($eventId);
 
         return back()->with('success-alert', 'Finish Event Success')->with('alert-message', 'event kamu sudah dinyatakan selesai, terimakasih');
     }
