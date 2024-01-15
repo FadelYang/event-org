@@ -7,7 +7,7 @@
                 @csrf
 
                 @foreach ($eventTickets as $eventTicket)
-                    <div class="p-5 bg-gray-400 mb-2 rounded">
+                    <div class="p-5 bg-[#D5E9F2] mb-2 rounded">
                         <p class="text-xl mb-2"><span
                                 class="font-bold">{{ date('D, d M y', strtotime($eventTicket->date)) }}</span>
                         </p>

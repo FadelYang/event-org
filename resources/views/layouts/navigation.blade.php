@@ -1,12 +1,12 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow-sm shadow-indigo-100">
+<nav x-data="{ open: false }" class="bg-[#202759] shadow-sm shadow-indigo-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('home') }}" class="text-[#F9A826] font-bold text-xl">
+                        <img src="{{ asset('images/main/pejuang_event_pe.png') }}" class="h-9 rounded-full">
                     </a>
                 </div>
 
@@ -35,7 +35,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @if (Route::has('login'))
                     @auth
-                        <p class="px-4 py-1 rounded-lg hero-banner">
+                        <p class="px-4 py-1 me-2 rounded-lg text-white border border-[#F9A826]">
                             {{ Auth::user()->exp == null ? '0 exp' : Auth::user()->exp . ' exp' }}</p>
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
@@ -72,12 +72,12 @@
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                        <a href="{{ route('login') }}" class="font-semibold text-sm px-4 py-1 me-2 rounded-lg text-white border hover:opacity-90 border-[#F9A826]">Log
                             in</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                                class="font-semibold text-sm px-4 py-1 me-2 rounded-lg text-[#202759] border border-[#F9A826] bg-[#F9A826] hover:opacity-90">Register</a>
                         @endif
                     @endauth
                 @endif
@@ -122,12 +122,12 @@
                     </x-responsive-nav-link>
                     @auth
                         @if (Auth::user()->role == app\Enum\UserRoleEnum::ADMIN)
-                            <x-responsive-nav-link :href="route('admin.home')" :active="request()->routeIs('event.create')">
+                            <x-responsive-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
                                 {{ __('Dashboard Admin') }}
                             </x-responsive-nav-link>
                         @endif
                     @endauth
-                    <x-responsive-nav-link :href="route('event.create')" :active="request()->routeIs('event.create')">
+                    <x-responsive-nav-link :href="route('event.get')" :active="request()->routeIs('event.get')">
                         {{ __('Semua Event') }}
                     </x-responsive-nav-link>
                 @else

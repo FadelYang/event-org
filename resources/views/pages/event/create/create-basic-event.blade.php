@@ -23,7 +23,7 @@
         <div class="flex gap-2 flex-wrap mb-10">
             <a href="#">
                 <div
-                    class="p-5 bg-gray-200 rounded lg min-h-[252px] max-w-[352px] box-content hover:bg-gray-300 border-2 hover:border-2 border-gray-500 hover:border-gray-700 hover:shadow-lg">
+                    class="p-5 bg-[#D5E9F2] rounded lg min-h-[252px] max-w-[352px] box-content hover:bg-gray-300 border-2 hover:border-2 border-gray-500 hover:border-gray-700 hover:shadow-lg">
                     <div class="mb-5">
                         <p class="text-md">Paket basic</p>
                         <p class="my-2 text-4xl">Basic</p>

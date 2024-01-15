@@ -20,7 +20,7 @@
     </x-slot>
     <div class="mt-3 max-w-7xl mx-1 lg:px-8 xl:mx-auto h-auto">
         <h2 class="text-2xl font-bold mb-2">Detail Event</h2>
-        <div class="bg-gray-200 p-5 mb-3">
+        <div class="bg-[#D5E9F2] p-5 mb-3">
             <div class="sm:grid  lg:grid-cols-3 sm:grid-cols-2">
                 <div class="mb-5">
                     <p class="font-bold ">Event Name</p>
@@ -101,7 +101,7 @@
         <script>
             function ticketForm(i) {
                 let value = `
-                            <div class="bg-gray-200 p-5 mb-3 rounded-lg">
+                            <div class="bg-[#D5E9F2] p-5 mb-3 rounded-lg">
                                 <p class="text-xl font-bold mb-2">Ticket Type ${i}</p>
                                 <div class="block md:flex gap-1">
                                     <div class="mb-1 flex-auto">
